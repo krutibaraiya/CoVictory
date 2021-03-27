@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Patient Reg</title>
+        <meta charset="utf-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    </head>
+<body>
+    <form class="form-compact" action="/patient-register/" method="post" >
+        <div class="row paddingBottom20">
+            <div class="container col-4">
+                <div class="row">
+                    <h3 class="text-center col-12 mb-0">Patient Registration</h3>
+                    <sub class="text-right text-muted col-12"><a href="#" tabindex="-1"><i class="far fa-edit"></i></a></sub>
+                </div>
+                <div class="dropdown-divider mb-3"></div>
+                <div class="form-group row">
+                    <label for="firstName" class="col-4 col-form-label-sm text-right">First Name:</label> 
+                    <div class="col-8">
+                        <div class="input-group"> 
+                            <input id="firstName" name="firstName" type="text" class="form-control form-control-sm">
+                        </div>
+                    </div>
+                </div> 
+                <div class="form-group row align-items-center">
+                    <label for="lastName" class="col-4 col-form-label-sm text-right">Last Name:</label> 
+                    <div class="col-8">
+                      <div class="input-group"> 
+                        <input id="lastName" name="lastName" type="text" class="form-control form-control-sm">
+                      </div>
+                    </div>
+                </div>
+                <div class="form-group row align-items-center">
+                    <label for="emailAddress" class="col-4 col-form-label-sm text-right">Email Address:</label> 
+                    <div class="col-8">
+                      <div class="input-group"> 
+                        <input id="emailAddress" name="emailAddress" type="email" class="form-control form-control-sm extendable">
+                      </div>
+                    </div>
+                </div>
+                <div class="form-group row align-items-center">
+                    <label for="gender" class="col-4 col-form-label-sm text-right">Gender:</label> 
+                    <div class="col-8">
+                      <div class="input-group">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="Male">
+                            <label class="form-check-label" for="inlineRadio1">Male</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="Female">
+                            <label class="form-check-label" for="inlineRadio2">Female</label>
+                          </div>
+                      </div>
+                    </div>
+                </div>
+                <div class="form-group row align-items-center">
+                    <label for="aadhar" class="col-4 col-form-label-sm text-right">Aadhar number:</label> 
+                    <div class="col-8">
+                      <div class="input-group">
+                        <input id="aadhar" name="aadhar" type="number" class="form-control form-control-sm">
+                      </div>
+                    </div>
+                </div>
+                <div class="form-group row align-items-center">
+                    <label for="dob" class="col-4 col-form-label-sm text-right">Date of Birth:</label> 
+                    <div class="col-8">
+                      <div class="input-group">
+                        <input id="dob" name="dob" type="text" class="form-control form-control-sm" placeholder="dd-mm-yyyy">
+                      </div>
+                    </div>
+                </div>
+                <div class="form-group row align-items-center">
+                    <label for="phone" class="col-4 col-form-label-sm text-right">Phone number:</label> 
+                    <div class="col-8">
+                      <div class="input-group">
+                        <input id="phone" name="phone" type="number" class="form-control form-control-sm">
+                      </div>
+                    </div>
+                </div>
+                <div class="form-group row align-items-center">
+                    <label for="password1" class="col-4 col-form-label-sm text-right">Password:</label> 
+                    <div class="col-8">
+                      <div class="input-group"> 
+                        <input id="password1" name="password1" type="password" class="form-control form-control-sm">
+                      </div>
+                    </div>
+                </div>
+                <div class="form-group row align-items-center">
+                    <label for="password2" class="col-4 col-form-label-sm text-right">Re-enter password:</label> 
+                    <div class="col-8">
+                      <div class="input-group"> 
+                        <input id="password2" name="password2" type="password" class="form-control form-control-sm">
+                      </div>
+                    </div>
+                </div>
+                <br>
+                <div class="text-center">
+                <input type="submit" class="btn btn-secondary" value= "Register for vaccination">
+                </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- <br><br><hr>
+
+       <table style="width:100%">
+         <tr>
+          <th>ID</th>
+          <th>Firstname</th>
+          <th>Lastname</th>
+          <th>Email</th>
+        </tr>
+        {% for text in all_text %}
+        <tr><SPAN>
+          <td>{{ text[0] }}</td>
+          <td>{{ text[1] }}</td>
+          <td>{{ text[2] }}</td>
+          <td>{{ text[3] }}</td>
+        </SPAN></tr>
+        {% endfor %}
+        
+      </table> -->
+        
+</body>
+</html>
