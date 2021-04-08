@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Doctor Login</title>
+        <title>Select Slots</title>
         <meta charset="utf-8">
     
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -14,33 +14,33 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     </head>
 <body>
-    <form class="form-compact" action="/doctor-login/" method="post" >
+    <form class="form-compact" action="/doctor-slot/" method="post" >
         <div class="row paddingBottom20">
             <div class="container col-4">
                 <div class="row">
-                    <h3 class="text-center col-12 mb-0">Doctor Login</h3>
+                    <h3 class="text-center col-12 mb-0">Slot Selection</h3>
                     <sub class="text-right text-muted col-12"><a href="#" tabindex="-1"><i class="far fa-edit"></i></a></sub>
                 </div>
                 <div class="dropdown-divider mb-3"></div>
                 <div class="form-group row align-items-center">
-                    <label for="emailAddress" class="col-4 col-form-label-sm text-right">Email Address:</label> 
+                    <label for="slot_date" class="col-4 col-form-label-sm text-right">Slot Date:</label> 
                     <div class="col-8">
                       <div class="input-group"> 
-                        <input id="emailAddress" name="emailAddress" type="email" class="form-control form-control-sm extendable">
+                        <input id="slot_date" name="slot_date" type="date" class="form-control form-control-sm">
                       </div>
                     </div>
                 </div>
-                <div class="form-group row align-items-center">
-                    <label for="password" class="col-4 col-form-label-sm text-right">Password:</label> 
+                <div class="form-group row">
+                    <label for="slot_time" class="col-4 col-form-label-sm text-right">Slot Time:</label> 
                     <div class="col-8">
-                      <div class="input-group"> 
-                        <input id="password" name="password" type="password" class="form-control form-control-sm">
-                      </div>
+                        <div class="input-group"> 
+                            <input id="slot_time" name="slot_time" type="time" class="form-control form-control-sm">
+                        </div>
                     </div>
-                </div>
+                </div> 
                 <br>
                 <div class="text-center">
-                <input type="submit" class="btn btn-secondary" value= "Login">
+                <input type="submit" class="btn btn-secondary" value= "Assign Slot">
                 </div>
                 </div>
             </div>

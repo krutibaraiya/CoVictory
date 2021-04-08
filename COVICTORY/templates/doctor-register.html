@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Patient Reg</title>
+        <title>Doctor Reg</title>
         <meta charset="utf-8">
     
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -18,7 +18,7 @@
         <div class="row paddingBottom20">
             <div class="container col-4">
                 <div class="row">
-                    <h3 class="text-center col-12 mb-0">Patient Registration</h3>
+                    <h3 class="text-center col-12 mb-0">Doctor Registration</h3>
                     <sub class="text-right text-muted col-12"><a href="#" tabindex="-1"><i class="far fa-edit"></i></a></sub>
                 </div>
                 <div class="dropdown-divider mb-3"></div>
@@ -30,6 +30,14 @@
                       </div>
                     </div>
                 </div>
+                <div class="form-group row align-items-center">
+                  <label for="VID" class="col-4 col-form-label-sm text-right">Vaccination Center ID:</label> 
+                  <div class="col-8">
+                    <div class="input-group"> 
+                      <input id="VID" name="VID" type="text" class="form-control form-control-sm">
+                    </div>
+                  </div>
+              </div>
                 <div class="form-group row">
                     <label for="Dname" class="col-4 col-form-label-sm text-right">Name:</label> 
                     <div class="col-8">
@@ -47,6 +55,15 @@
                       </div>
                     </div>
                 </div>
+                <div class="form-group row align-items-center">
+                  Enter your all your qualifications in a single line separated by ','
+                  <label for="qualifications" class="col-4 col-form-label-sm text-right">Qualifications:</label> 
+                  <div class="col-8">
+                    <div class="input-group"> 
+                      <input id="qualifications" name="qualifications" type="text" class="form-control form-control-sm extendable">
+                    </div>
+                  </div>
+              </div>
                 <div class="form-group row align-items-center">
                     <label for="phone" class="col-4 col-form-label-sm text-right">Phone number:</label> 
                     <div class="col-8">
