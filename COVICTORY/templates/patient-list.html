@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Vaccination Centers</title>
+        <title>Patient List</title>
         <meta charset="utf-8">
     
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -14,35 +14,20 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     </head>
 <body>
-  <h3 class="text-center col-12 mb-0">Vaccination Centers</h3>
-    <form class="form-compact" action="/vaccination-center/" method="post" >
-        Choose the ID of the Vaccination Center you want to register for vaccination
-        <select name="vid">
-            <option></option>
-            {% for center in centers %}
-            <option value="{{ center[0] }}">
-                {{ center[0] }}
-            </option>
-        {% endfor %}
-        </select>
-        
-
-
+    <h3 class="text-center col-12 mb-0">Patient List</h3>
     <br><br><hr>
 
        <table style="width:100%">
          <tr>
-          <th>Vaccination Center ID</th>
-          <th>Vaccination Center Location</th>
-          <th>Vaccination Center Name</th>
-          <th>Vaccine</th>
+          <th>Patient ID</th>
+          <th>Slot Date</th>
+          <th>Slot Time</th>
         </tr>
-        {% for center in centers %}
+        {% for patient in patients %}
         <tr><SPAN>
-          <td>{{ center[0] }}</td>
-          <td>{{ center[1] }}</td>
-          <td>{{ center[2] }}</td>
-          <td>{{ center[3] }}</td>
+          <td>{{ patient[0] }}</td>
+          <td>{{ patient[1] }}</td>
+          <td>{{ patient[2] }}</td>
         </SPAN></tr>
         {% endfor %}
         
@@ -50,10 +35,6 @@
 
     </div>
     <br>
-    <div class="text-center">
-    <input type="submit" class="btn btn-secondary" value= "Next">
-    </div>
-    </div>
-  </form>
+
 </body>
 </html>

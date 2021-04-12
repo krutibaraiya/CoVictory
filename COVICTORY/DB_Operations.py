@@ -15,11 +15,23 @@ def get_centers():
     centers = cursor.fetchall()    
     return centers
 
+def get_patients(did):
+    cursor.execute("SELECT pid,s_time,s_date FROM VACCINATION WHERE did = %s",(did))
+    patients = cursor.fetchall()
+    return patients
+
 
 def get_slots(vid):
     cursor.execute("SELECT vid,s_date,s_time FROM SLOT WHERE vid = %s",(vid))
     slots = cursor.fetchall()
     return slots
+
+
+def get_assigned_slots(vid, slot_date):
+    cursor.execute("SELECT s_time FROM SLOT WHERE vid = %s AND s_date = %s", (vid, slot_date))
+    slots = cursor.fetchall()
+    return slots
+
 
 def get_vid(emailAddress_value):
     cursor.execute("SELECT vid FROM DOCTOR WHERE d_email = %s",(emailAddress_value))
@@ -97,3 +109,13 @@ def doctor_qualification(did, qualification):
     cursor.execute("INSERT INTO QUALIFICATION(did, qualification) VALUES (%s, %s)",(did, qualification))
     connection.commit()
     return 1
+
+def get_males():
+    cursor.execute("SELECT count(*) from PATIENT WHERE gender='Male'")
+    males =  [v for v in cursor.fetchone()][0]
+    return males
+
+def get_females():
+    cursor.execute("SELECT count(*) from PATIENT WHERE gender='Female'")
+    females = [v for v in cursor.fetchone()][0]
+    return females

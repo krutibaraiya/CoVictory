@@ -2,13 +2,18 @@ from flask import Flask, request, render_template, redirect, url_for, flash, ses
 from email_validator import validate_email
 from DB_Operations import *
 import re
-from flask_login import login_required
+from flask_login import login_required, logout_user
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
 
 
-
+@app.route("/")
+def home():
+    males = get_males()
+    females = get_females()
+    return render_template('home.html',males=males, females=females)
 
 @app.route("/vaccination-center/", methods=["GET", "POST"])
 def VaccinationCenter():
@@ -77,7 +82,6 @@ def PatientLogin():
     if request.method == "POST":
         emailAddress_value = request.form["emailAddress"]
         password_value = request.form["password"]
-
         check = ifPatientExist(emailAddress_value, password_value)
 
         if not check:
@@ -122,9 +126,9 @@ def DoctorLogin():
 
         if not check:
             flash('Login failed. Check your email and password', 'danger')
-            return render_template('patient-login.html')
+            return render_template('doctor-login.html')
         else:
-            return "Paient List"
+            return redirect(url_for('PatientList'))
     return render_template('doctor-login.html')
 
 @login_required
@@ -135,15 +139,36 @@ def DoctorSlot():
        slot_time = request.form["slot_time"]
        vid = get_vid(session['emailAddress'])
        check = ifSlotAssigned(vid, slot_date, slot_time)
-
+       date = datetime.strptime(slot_date, "%Y-%m-%d")+timedelta(days=28) 
        if not check:
            AssignSlot(vid, slot_date, slot_time, session['did'])
+           AssignSlot(vid, date.date(),slot_time, session['did'])
            return render_template('doctor-slot.html')
        else:
             flash('This slot is already assigned to other doctor. Please select a different slot.', 'error')
             return render_template('doctor-slot.html') 
     return render_template('doctor-slot.html')
 
+
+@login_required
+@app.route("/patient-list/",methods=["GET","POST"])
+def PatientList():
+    patients = get_patients(session['did'])
+    return render_template('patient-list.html', patients = patients)
+
+
+@login_required
+@app.route("/patient-logout/",methods=["GET","POST"])
+def PatientLogout():
+    logout_user()
+    return redirect(url_for('PatientLogin'))
+
+
+@login_required
+@app.route("/doctor-logout/",methods=["GET","POST"])
+def DoctorLogout():
+    logout_user()
+    return redirect(url_for('DoctorLogin'))
 
 if __name__ == "__main__":
     app.run(debug=True)
