@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
-<body background="96804984-medical-icons-seamless-pattern-can-be-used-for-any-medical-and-healthcare-topics-as-wallpaper-illust.jpg">
+<body background="{{url_for('static', filename = 'images/homepage-back.jpg')}}">
 
 <nav class="navbar navbar-dark bg-dark">
   <a class="navbar-brand">CoVictory</a>
@@ -18,7 +18,7 @@
 
 <div class="row" style="padding-left: 12rem">
   <div class="col-sm-6">
-    <img class="card-img-top" src="namaste.png" alt="namste image" style="margin: 50px;width:75% ;">
+    <img class="card-img-top" src="{{url_for('static', filename = 'images/namaste.png')}}" alt="namste image" style="margin: 50px;width:75% ;">
   </div>
   <div class="col-sm-6">
     <h1 class="text-center" style="margin: 50px 25px;"><mark>CONTACT US</mark></h2>
