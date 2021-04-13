@@ -2,18 +2,30 @@ from flask import Flask, request, render_template, redirect, url_for, flash, ses
 from email_validator import validate_email
 from DB_Operations import *
 import re
-from flask_login import login_required, logout_user
+from flask_login import login_required, logout_user, login_user, login_manager, LoginManager
 from datetime import datetime, timedelta
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
 
 
 @app.route("/")
 def home():
-    males = get_males()
-    females = get_females()
-    return render_template('home.html',males=males, females=females)
+    centers = get_total_centers()
+    doctors = get_total_doctors()
+    patients = get_total_patients()
+    return render_template('home.html', centers = centers, doctors= doctors, patients = patients)
+
+@login_required
+@app.route("/doctor-home/",methods=["GET", "POST"])
+def DoctorHome():
+    did = session['did']
+    name = get_doctor_name(did)
+    return render_template('doctor-home.html', name = name)
+
 
 @app.route("/vaccination-center/", methods=["GET", "POST"])
 def VaccinationCenter():
@@ -27,13 +39,14 @@ def VaccinationCenter():
 @app.route("/slot/", methods=["GET","POST"])
 def Slot():
     slots = get_slots(session['vid_value'])
+    dropdown_slots = get_dropdown_slots(session['vid_value'])
     if request.method == "POST":
         slot_value = request.form["slot"]
-        slots = slot_value.split(',')
+        slots = slot_value.split(',')     
         session['slot_date'] = slots[0]
         session['slot_time'] = slots[1]
         return redirect(url_for('PatientRegister'))
-    return render_template('slot.html', slots = slots)
+    return render_template('slot.html', slots = slots, dropdown_slots=dropdown_slots)
 
 
 @app.route("/patient-register/", methods=["POST", "GET"])
@@ -128,7 +141,7 @@ def DoctorLogin():
             flash('Login failed. Check your email and password', 'danger')
             return render_template('doctor-login.html')
         else:
-            return redirect(url_for('PatientList'))
+            return redirect(url_for('DoctorHome'))
     return render_template('doctor-login.html')
 
 @login_required
@@ -154,6 +167,10 @@ def DoctorSlot():
 @app.route("/patient-list/",methods=["GET","POST"])
 def PatientList():
     patients = get_patients(session['did'])
+    if request.method == 'POST':
+        query = request.form['search']
+        data = patient_list_search_bar(query)
+        return render_template('patient-list.html', patients = data)
     return render_template('patient-list.html', patients = patients)
 
 
@@ -172,14 +189,3 @@ def DoctorLogout():
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-
-        
-        
-
-        
-
-        
-
-       
-        

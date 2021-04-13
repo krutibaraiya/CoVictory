@@ -17,6 +17,13 @@
     <h3 class="text-center col-12 mb-0">Patient List</h3>
     <br><br><hr>
 
+    <div class="search">
+      <form action="/patient-list/" method=post>
+          <input type=text name=search value="{{ request.form.search}}"></br>
+          <div class="actions"><input type=submit value="Search"></div>
+      </form>
+      </div>
+
        <table style="width:100%">
          <tr>
           <th>Patient ID</th>

@@ -16,7 +16,7 @@ def get_centers():
     return centers
 
 def get_patients(did):
-    cursor.execute("SELECT pid,s_time,s_date FROM VACCINATION WHERE did = %s",(did))
+    cursor.execute("SELECT pid, s_date, s_time FROM VACCINATION WHERE did = %s",(did))
     patients = cursor.fetchall()
     return patients
 
@@ -26,6 +26,11 @@ def get_slots(vid):
     slots = cursor.fetchall()
     return slots
 
+
+def get_dropdown_slots(vid):
+    cursor.execute("SELECT SLOT.vid, SLOT.s_time, SLOT.s_date, VACCINATION.vid, VACCINATION.s_time, VACCINATION.s_date, VACCINATION.pid FROM SLOT LEFT JOIN VACCINATION USING (vid,s_date,s_time) WHERE pid IS NULL")
+    slots = cursor.fetchall()
+    return slots
 
 def get_assigned_slots(vid, slot_date):
     cursor.execute("SELECT s_time FROM SLOT WHERE vid = %s AND s_date = %s", (vid, slot_date))
@@ -71,6 +76,7 @@ def ifPatientRegistered(emailAddress_value):
     cursor.execute("SELECT * FROM PATIENT WHERE p_email = %s", (emailAddress_value))
     account = cursor.fetchone()
     return account
+
 
 def ifPatientExist(emailAddress_value, password_value):
     cursor.execute("SELECT * FROM PATIENT WHERE p_email = %s AND p_pwd = %s", (emailAddress_value, password_value))
@@ -119,3 +125,57 @@ def get_females():
     cursor.execute("SELECT count(*) from PATIENT WHERE gender='Female'")
     females = [v for v in cursor.fetchone()][0]
     return females
+
+def patient_list_search_bar(query):
+    cursor.execute("SELECT pid, s_date, s_time FROM VACCINATION WHERE pid = %s OR s_date = %s OR s_time = %s",(query,query,query))
+    patients = cursor.fetchall()
+    return patients
+
+def vaccination_center_search_bar(query):
+    cursor.execute("SELECT vid,vname,vloc,vac_name FROM VACCINATION_CENTER WHERE vid = %s OR vname = %s OR vloc = %s OR vac_name = %s",(query,query,query,query))
+    centers = cursor.fetchall()
+    return centers
+
+def doctor_search_bar(query):
+    cursor.execute("SELECT did, dname, d_email, d_phone FROM DOCTOR WHERE did=%s OR dname = %s OR d_email = %s OR d_phone=%s",(query,query,query,query))
+    doctors = cursor.fetchall()
+    return doctors
+
+def get_vid_for_vaccine(vaccine):
+    cursor.execute("SELECT vid FROM VACCINATION_CENTER WHERE vac_name = %s",(vaccine))
+    centers = cursor.fetchall()
+    return centers
+
+
+def get_patients_of_each_centers(centers, sum):
+    for center in centers:
+        cursor.execute("SELECT COUNT(*) FROM VACCINATION WHERE vid = %s", (center))
+        count = [v for v in cursor.fetchone()][0]
+        sum = sum + count
+    return sum
+
+
+def get_status(status):
+    cursor.execute("SELECT COUNT(*) FROM VACCINATION_REPORT WHERE status = %s",(status))
+    status = [v for v in cursor.fetchone()][0]
+    return status
+
+def get_total_centers():
+    cursor.execute("SELECT COUNT(*) FROM VACCINATION_CENTER")
+    centers = [v for v in cursor.fetchone()][0]
+    return centers
+
+def get_total_doctors():
+    cursor.execute("SELECT COUNT(*) FROM DOCTOR")
+    doctors = [v for v in cursor.fetchone()][0]
+    return doctors
+
+def get_total_patients():
+    cursor.execute("SELECT COUNT(*) FROM PATIENT")
+    patients = [v for v in cursor.fetchone()][0]
+    return patients
+
+def get_doctor_name(did):
+    cursor.execute("SELECT dname FROM DOCTOR WHERE did = %s",(did))
+    name = cursor.fetchone()
+    return name

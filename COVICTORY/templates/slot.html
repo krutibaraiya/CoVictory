@@ -18,7 +18,7 @@
         Choose the slot you want to register for vaccination
         <select name="slot">
             <option></option>
-            {% for slot in slots %}
+            {% for slot in dropdown_slots %}
             <option value="{{slot[1]}},{{slot[2]}}">
               {{slot[1]}}, {{slot[2]}}
             </option>
