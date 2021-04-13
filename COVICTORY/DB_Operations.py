@@ -147,7 +147,7 @@ def get_vid_for_vaccine(vaccine):
     return centers
 
 
-def get_patients_of_each_centers(centers, sum):
+def get_patients_of_each_vaccine(centers, sum):
     for center in centers:
         cursor.execute("SELECT COUNT(*) FROM VACCINATION WHERE vid = %s", (center))
         count = [v for v in cursor.fetchone()][0]
@@ -177,5 +177,29 @@ def get_total_patients():
 
 def get_doctor_name(did):
     cursor.execute("SELECT dname FROM DOCTOR WHERE did = %s",(did))
-    name = cursor.fetchone()
+    name = [v for v in cursor.fetchone()][0]
     return name
+
+def get_patient_details():
+    cursor.execute("SELECT pid, fname, lname, p_email, gender, dob, aadhar_id, p_phone FROM PATIENT")
+    patients = cursor.fetchall()
+    return patients
+
+
+def get_doctor_details():
+    cursor.execute("SELECT did, dname, d_email, d_phone FROM DOCTOR")
+    doctors = cursor.fetchall()
+    return doctors
+
+def get_did_for_all_doctors():
+    cursor.execute("SELECT did FROM DOCTOR")
+    did = cursor.fetchall()
+    return did
+
+def get_qualification(did, qualifications, k):
+    for i in did:
+        cursor.execute("SELECT qualification FROM QUALIFICATION WHERE did = %s",(i))
+        qualification = cursor.fetchall()
+        qualifications[k] = qualifications[k] + qualification
+        k = k + 1
+    return qualifications

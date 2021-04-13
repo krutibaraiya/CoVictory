@@ -9,7 +9,10 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = 'login'
+
+@login_manager.user_loader
+def load_user(user_id):
+    return user_id
 
 
 @app.route("/")
@@ -18,6 +21,12 @@ def home():
     doctors = get_total_doctors()
     patients = get_total_patients()
     return render_template('home.html', centers = centers, doctors= doctors, patients = patients)
+
+
+@app.route("/admin", methods=["GET","POST"])
+def admin():
+    return render_template('admin.html')
+
 
 @login_required
 @app.route("/doctor-home/",methods=["GET", "POST"])
@@ -186,6 +195,38 @@ def PatientLogout():
 def DoctorLogout():
     logout_user()
     return redirect(url_for('DoctorLogin'))
+
+@app.route("/vaccination-center-details/", methods=["GET","POST"])
+def vaccintionCenterDetails():
+    centers = get_centers()
+    return render_template('vaccination-center-details.html',centers=centers)
+
+@app.route("/patient-details",methods=["GET","POST"])
+def patientDetails():
+    patients = get_patient_details()
+    return render_template('patient-details.html',patients=patients)
+
+@app.route("/doctor-details", methods=["GET","POST"])
+def doctorDetails():
+    doctors = get_doctor_details()
+    all_did = get_did_for_all_doctors()
+    total_doctors = get_total_doctors()
+    qualifications = [[total_doctors]]
+    qualifications = get_qualification(all_did, qualifications, total_doctors)
+    return render_template('doctor-details.html',doctors=doctors, qualifications=qualifications)
+
+
+@app.route("/statistics/",methods=["GET", "POST"])
+def statistics():
+    males = get_males()
+    females = get_females()
+    vid_covishield = get_vid_for_vaccine('Covishield')
+    covishield_count = get_patients_of_each_vaccine(vid_covishield, 0)
+    vid_covaxin = get_vid_for_vaccine('Covaxin')
+    covaxin_count = get_patients_of_each_vaccine(vid_covaxin, 0)
+    vid_comirnaty = get_vid_for_vaccine('Comirnaty')
+    comirnaty_count = get_patients_of_each_vaccine(vid_comirnaty, 0)
+    return render_template('statistics.html', males= males, females=females, covishield= covishield_count, covaxin=covaxin_count, comirnaty=comirnaty_count)
 
 if __name__ == "__main__":
     app.run(debug=True)
