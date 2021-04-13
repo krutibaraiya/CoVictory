@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
-<body background="96804984-medical-icons-seamless-pattern-can-be-used-for-any-medical-and-healthcare-topics-as-wallpaper-illust.jpg">
+<body background="{{url_for('static', filename = 'images/homepage-back.jpg')}}">
 
 <nav class="navbar navbar-dark bg-dark">
   <a class="navbar-brand">CoVictory</a>
@@ -22,7 +22,7 @@
 <div class="row" style="padding-left: 12rem">
   <div class="col-sm-6">
     <div class="card text-white bg-dark" style="width: 20rem;">
-    <img class="card-img-top" src="checklist.png" alt="checklist image">
+    <img class="card-img-top" src="{{url_for('static', filename = 'images/checklist.png')}}" alt="checklist image">
     <div class="card-body">
       <h3 class="card-title text-center">Slot booking</h3>
       <a href="/doctor-slot" class="stretched-link">Book your slots</a>
