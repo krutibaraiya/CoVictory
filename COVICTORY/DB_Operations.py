@@ -4,7 +4,7 @@ import pymysql
 #database connection
 connection = pymysql.connect(host="localhost", 
                             user="root", 
-                            passwd="kruti20", 
+                            passwd="123456**oK", 
                             database="COVICTORY")
 cursor = connection.cursor()
 
@@ -89,8 +89,13 @@ def doctor_register(DID_value, Dname_value, emailAddress_value, password1_value,
     connection.commit()
     return 1
 
-def ifDoctorRegistered(emailAddress_value):
+def ifDoctorEmailRegistered(emailAddress_value):
     cursor.execute("SELECT * FROM DOCTOR WHERE d_email = %s", (emailAddress_value))
+    account = cursor.fetchone()
+    return account
+
+def ifDoctorIdRegistered(DID_value):
+    cursor.execute("SELECT * FROM DOCTOR WHERE did = %s", (DID_value))
     account = cursor.fetchone()
     return account
 

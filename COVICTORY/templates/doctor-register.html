@@ -14,7 +14,23 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     </head>
 <body>
-    <form class="form-compact" action="/doctor-register/" method="post" >
+    <div class = "container">
+    {% block content%}
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for msg in messages %}
+                    <div class = "alert alert-warning alert-dismissible fade show" role="alert">
+                    <span> {{msg}} </span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    {% endblock  %}
+    </div>
+    <form class="form-compact needs-validation" action="/doctor-register/" method="post" novalidate>
         <div class="row paddingBottom20">
             <div class="container col-4">
                 <div class="row">
@@ -26,7 +42,10 @@
                     <label for="DID" class="col-4 col-form-label-sm text-right">Doctor ID:</label> 
                     <div class="col-8">
                       <div class="input-group"> 
-                        <input id="DID" name="DID" type="text" class="form-control form-control-sm">
+                        <input id="DID" name="DID" type="text" class="form-control form-control-sm" aria-describedby="inputGroupPrepend" required>
+                        <div class = "invalid-feedback">
+                          Please enter your Doctor ID
+                        </div>
                       </div>
                     </div>
                 </div>
@@ -34,7 +53,10 @@
                   <label for="VID" class="col-4 col-form-label-sm text-right">Vaccination Center ID:</label> 
                   <div class="col-8">
                     <div class="input-group"> 
-                      <input id="VID" name="VID" type="text" class="form-control form-control-sm">
+                      <input id="VID" name="VID" type="text" class="form-control form-control-sm" aria-describedby="inputGroupPrepend" required>
+                        <div class = "invalid-feedback">
+                          Please enter a Vaccination Center
+                        </div>
                     </div>
                   </div>
               </div>
@@ -42,7 +64,10 @@
                     <label for="Dname" class="col-4 col-form-label-sm text-right">Name:</label> 
                     <div class="col-8">
                         <div class="input-group"> 
-                            <input id="Dname" name="Dname" type="text" class="form-control form-control-sm">
+                            <input id="Dname" name="Dname" type="text" class="form-control form-control-sm" aria-describedby="inputGroupPrepend" required>
+                        <div class = "invalid-feedback">
+                          Please enter your name
+                        </div>
                         </div>
                     </div>
                 </div> 
@@ -51,7 +76,10 @@
                     <label for="emailAddress" class="col-4 col-form-label-sm text-right">Email Address:</label> 
                     <div class="col-8">
                       <div class="input-group"> 
-                        <input id="emailAddress" name="emailAddress" type="email" class="form-control form-control-sm extendable">
+                        <input id="emailAddress" name="emailAddress" type="email" class="form-control form-control-sm extendable" aria-describedby="inputGroupPrepend" required>
+                        <div class = "invalid-feedback">
+                          Please enter a valid email
+                        </div>
                       </div>
                     </div>
                 </div>
@@ -60,7 +88,10 @@
                   <label for="qualifications" class="col-4 col-form-label-sm text-right">Qualifications:</label> 
                   <div class="col-8">
                     <div class="input-group"> 
-                      <input id="qualifications" name="qualifications" type="text" class="form-control form-control-sm extendable">
+                      <input id="qualifications" name="qualifications" type="text" class="form-control form-control-sm extendable" aria-describedby="inputGroupPrepend" required>
+                      <div class = "invalid-feedback">
+                        Please enter your qualifications
+                      </div>
                     </div>
                   </div>
               </div>
@@ -68,7 +99,10 @@
                     <label for="phone" class="col-4 col-form-label-sm text-right">Phone number:</label> 
                     <div class="col-8">
                       <div class="input-group">
-                        <input id="phone" name="phone" type="number" class="form-control form-control-sm">
+                        <input id="phone" name="phone" type="phone" class="form-control form-control-sm" aria-describedby="inputGroupPrepend" pattern="[0-9]{10}" required>
+                        <div class = "invalid-feedback">
+                          Please enter a valid phone number
+                        </div>
                       </div>
                     </div>
                 </div>
@@ -76,7 +110,10 @@
                     <label for="password1" class="col-4 col-form-label-sm text-right">Password:</label> 
                     <div class="col-8">
                       <div class="input-group"> 
-                        <input id="password1" name="password1" type="password" class="form-control form-control-sm">
+                        <input id="password1" name="password1" type="password" class="form-control form-control-sm" aria-describedby="inputGroupPrepend" required>
+                        <div class = "invalid-feedback">
+                          Please enter a password
+                        </div>
                       </div>
                     </div>
                 </div>
@@ -84,7 +121,10 @@
                     <label for="password2" class="col-4 col-form-label-sm text-right">Re-enter password:</label> 
                     <div class="col-8">
                       <div class="input-group"> 
-                        <input id="password2" name="password2" type="password" class="form-control form-control-sm">
+                        <input id="password2" name="password2" type="password" class="form-control form-control-sm" aria-describedby="inputGroupPrepend" required>
+                        <div class = "invalid-feedback">
+                          Please re-enter the password
+                        </div>
                       </div>
                     </div>
                 </div>
@@ -96,7 +136,7 @@
             </div>
         </div>
     </form>
-
+    <script src = "{{url_for('static',filename='javascript/validate.js')}}"></script>
         
 </body>
 </html>
