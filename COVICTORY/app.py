@@ -87,7 +87,7 @@ def PatientRegister():
         #if password1_value != password2_value:
         #    flash(u'Password and Re-enter password field should match','error')
 
-        check1 = ifPatientRegistered(emailAddress_value)
+        check1 = ifPatientEmailRegistered(emailAddress_value)
         check2 = ifPatientAadharRegistered(aadhar_value)
         check = check1 and check2 
 
