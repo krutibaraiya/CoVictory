@@ -18,12 +18,19 @@
     <br><br><hr>
 
     <div class="search">
-      <form action="/patient-list/" method=post>
+      <form action="/patient-list/" class="form-inline justify-content-center" method=post>
           <input type=text name=search value="{{ request.form.search}}"></br>
           <div class="actions"><input type=submit value="Search"></div>
       </form>
       </div>
-
+      <!-- <form class="form-inline justify-content-center">
+        <label class="sr-only" for="inlineFormInputName2">Name</label>
+        <input type="text" class="form-control" id="inlineFormInputName2" placeholder="Jane Doe">
+      </label>
+    </div>
+  
+    <button type="submit" class="btn btn-primary mb-2">Submit</button>
+  </form> -->
        <table style="width:100%">
          <tr>
           <th>Patient ID</th>

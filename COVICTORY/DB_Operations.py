@@ -4,7 +4,7 @@ import pymysql
 #database connection
 connection = pymysql.connect(host="localhost", 
                             user="root", 
-                            passwd="kruti20", 
+                            passwd="123456**oK", 
                             database="COVICTORY")
 cursor = connection.cursor()
 
@@ -203,3 +203,9 @@ def get_qualification(did, qualifications, k):
         qualifications[k] = qualifications[k] + qualification
         k = k + 1
     return qualifications
+
+
+def get_dob():
+    cursor.execute("SELECT dob FROM PATIENT")
+    dob = [v for v in cursor.fetchone()][0]
+    return dob

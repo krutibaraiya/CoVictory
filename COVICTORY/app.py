@@ -3,7 +3,7 @@ from email_validator import validate_email
 from DB_Operations import *
 import re
 from flask_login import login_required, logout_user, login_user, login_manager, LoginManager
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
@@ -227,6 +227,24 @@ def statistics():
     covaxin_count = get_patients_of_each_vaccine(vid_covaxin, 0)
     vid_comirnaty = get_vid_for_vaccine('Comirnaty')
     comirnaty_count = get_patients_of_each_vaccine(vid_comirnaty, 0)
+    dob = get_dob()
+    for dt in dob:
+        today = date.today()
+        age = today.year - dt.year - ((today.month, today.day) < (dt.month, dt.day))
+        if age >= 30 and age < 40:
+            age30 = age30 + 1
+        elif age >=40 and age < 50:
+            age40 = age40 + 1
+        elif age >= 50 and age < 60:
+            age50 = age50 + 1
+        elif age >=60 and age < 70:
+            age60 = age60 + 1
+        elif age >= 70 and age < 80:
+            age70 = age70 + 1
+        elif age >= 80 and age < 90:
+            age80 = age80 + 1
+
+
     return render_template('statistics.html', males= males, females=females, covishield= covishield_count, covaxin=covaxin_count, comirnaty=comirnaty_count)
 
 if __name__ == "__main__":

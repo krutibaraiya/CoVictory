@@ -22,7 +22,7 @@
 <div class="row" style="padding-left: 5rem">
   <div class="col-sm-4">
     <div class="card text-white bg-dark " style="width: 20rem;">
-    <img class="card-img-top" src="boy-with-mask.png" alt="patient image">
+    <img class="card-img-top" src="{{url_for('static', filename = 'images/boy-with-mask.png')}}" alt="patient image">
     <div class="card-body">
       <h3 class="card-title text-center">Patients</h3>
       <a href="/patient-details" class="stretched-link">View Patient Details</a>
@@ -31,16 +31,16 @@
   </div>
   <div class="col-sm-4">
     <div class="card text-white bg-dark" style="width: 20rem;">
-    <img class="card-img-top" src="hospital-resize.png" alt="hospital image" style="padding-top: 5rem">
+    <img class="card-img-top" src="{{url_for('static', filename = 'images/hospital-resize.png')}}" alt="hospital image" style="padding-top: 5rem">
     <div class="card-body">
-      <h3 class="card-title text-center">Vaccination Centres</h3>
-      <a href="/vaccination-center-details" class="stretched-link">View Centre Details</a>
+      <h3 class="card-title text-center">Vaccination Centers</h3>
+      <a href="/vaccination-center-details" class="stretched-link">View Center Details</a>
     </div>
   </div>
   </div>
   <div class="col-sm-4">
     <div class="card text-white bg-dark " style="width: 20rem;">
-    <img class="card-img-top" src="doctor-checking-patient.png" alt="doctor image">
+    <img class="card-img-top" src="{{url_for('static', filename = 'images/doctor-checking-patient.png')}}" alt="doctor image">
     <div class="card-body">
       <h3 class="card-title text-center">Doctors</h3>
       <a href="/doctor-details" class="stretched-link">View Doctor Details</a>
