@@ -72,8 +72,13 @@ def patient_register(firstName_value, lastName_value, emailAddress_value, passwo
     connection.commit()
     return 1
 
-def ifPatientRegistered(emailAddress_value):
+def ifPatientEmailRegistered(emailAddress_value):
     cursor.execute("SELECT * FROM PATIENT WHERE p_email = %s", (emailAddress_value))
+    account = cursor.fetchone()
+    return account
+
+def ifPatientAadharRegistered(aadhar_value):
+    cursor.execute("SELECT * FROM PATIENT WHERE aadhar_id = %s", (aadhar_value))
     account = cursor.fetchone()
     return account
 
@@ -89,8 +94,13 @@ def doctor_register(DID_value, Dname_value, emailAddress_value, password1_value,
     connection.commit()
     return 1
 
-def ifDoctorRegistered(emailAddress_value):
+def ifDoctorEmailRegistered(emailAddress_value):
     cursor.execute("SELECT * FROM DOCTOR WHERE d_email = %s", (emailAddress_value))
+    account = cursor.fetchone()
+    return account
+
+def ifDoctorIdRegistered(DID_value):
+    cursor.execute("SELECT * FROM DOCTOR WHERE did = %s", (DID_value))
     account = cursor.fetchone()
     return account
 

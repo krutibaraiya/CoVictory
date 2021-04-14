@@ -72,23 +72,25 @@ def PatientRegister():
         password1_value = request.form["password1"]
         password2_value = request.form["password2"]
 
-        valid = validate_email(emailAddress_value)
-        if not valid:
-            flash(u'Enter a valid email address', 'error')
+        #valid = validate_email(emailAddress_value)
+        #if not valid:
+        #    flash(u'Enter a valid email address', 'error')
+        #
+        #aadhar_valid = re.search("[0-9]{12}", aadhar_value)
+        #if not aadhar_valid:
+        #    flash(u'Enter a 12 digit aadhar number', 'error')
+        #
+        #phone_valid = re.search("[0-9]{10}", phone_value)
+        #if not phone_valid:
+        #    flash(u'Enter a 10 digit phone number', 'error')
         
-        aadhar_valid = re.search("[0-9]{12}", aadhar_value)
-        if not aadhar_valid:
-            flash(u'Enter a 12 digit aadhar number', 'error')
-        
-        phone_valid = re.search("[0-9]{10}", phone_value)
-        if not phone_valid:
-            flash(u'Enter a 10 digit phone number', 'error')
-        
-        if password1_value != password2_value:
-            flash(u'Password and Re-enter password field should match','error')
+        #if password1_value != password2_value:
+        #    flash(u'Password and Re-enter password field should match','error')
 
+        check1 = ifPatientEmailRegistered(emailAddress_value)
+        check2 = ifPatientAadharRegistered(aadhar_value)
+        check = check1 and check2 
 
-        check = ifPatientRegistered(emailAddress_value)
         if not check:
             patient_register(firstName_value, lastName_value, emailAddress_value, password1_value, gender_value, dob_value, aadhar_value, phone_value)
             pid = get_pid(emailAddress_value)
@@ -96,12 +98,17 @@ def PatientRegister():
             patient_vaccination(pid, session['vid_value'], did, session['slot_date'], session['slot_time'])
             return redirect(url_for('PatientLogin'))    
         else:
+            if check1:
+                flash('Email already registered. Please login or enter the correct email')
+            if check2:
+                flash('Aadhar already registered. Please login or enter the correct aadhar number')
             return render_template('patient-register.html')
     return render_template('patient-register.html')
 
 
 @app.route("/patient-login/", methods=["POST", "GET"])
 def PatientLogin():
+    check = True
     if request.method == "POST":
         emailAddress_value = request.form["emailAddress"]
         password_value = request.form["password"]
@@ -126,7 +133,9 @@ def DoctorRegister():
         phone_value = request.form["phone"]
         password1_value = request.form["password1"]
 
-        check = ifDoctorRegistered(emailAddress_value)
+        check1 = ifDoctorEmailRegistered(emailAddress_value)
+        check2 = ifDoctorIdRegistered(DID_value)
+        check = check1 and check2
         if not check:
             doctor_register(DID_value, Dname_value, emailAddress_value, password1_value, phone_value, VID_value)
             did = get_did(emailAddress_value)
@@ -134,11 +143,18 @@ def DoctorRegister():
             for qualification in qualifications:
                 doctor_qualification(did,qualification)
             return redirect(url_for('DoctorLogin'))
-    return render_template('doctor-register.html')    
+        else:
+            if check1:
+                flash('Email already registered. Please login or enter the correct email')
+            if check2:
+                flash('Doctor ID already registered. Please login or enter the correct Doctor Id')
+            return render_template('doctor-register.html')
+    return render_template('doctor-register.html')
 
 
 @app.route("/doctor-login/", methods=["POST", "GET"])
 def DoctorLogin():
+    check = True
     if request.method == "POST":
         emailAddress_value = request.form["emailAddress"]
         password_value = request.form["password"]
