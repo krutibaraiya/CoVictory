@@ -219,3 +219,24 @@ def get_dob():
     cursor.execute("SELECT dob FROM PATIENT")
     dob = [v for v in cursor.fetchone()][0]
     return dob
+
+def get_patient_report_details(pid):
+    cursor.execute("SELECT fname, lname, p_email, gender, dob, aadhar_id, p_phone FROM PATIENT WHERE pid = %s",(pid))
+    patient = cursor.fetchone()
+    return patient
+
+def get_center_report_details(vid):
+    cursor.execute("SELECT vloc, vname, vac_name FROM VACCINATION_CENTER")
+    center = cursor.fetchone()
+    return center
+
+
+def get_did_from_pid(pid):
+    cursor.execute("SELECT did FROM VACCINATION WHERE pid = %s", (pid))
+    did = cursor.fetchone()
+    return did
+
+def get_doctor_report_details(did):
+    cursor.execute("SELECT dname, d_email FROM DOCTOR WHERE did = %s",(did))
+    doctor = cursor.fetchone()
+    return doctor

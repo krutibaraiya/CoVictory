@@ -72,21 +72,6 @@ def PatientRegister():
         password1_value = request.form["password1"]
         password2_value = request.form["password2"]
 
-        #valid = validate_email(emailAddress_value)
-        #if not valid:
-        #    flash(u'Enter a valid email address', 'error')
-        #
-        #aadhar_valid = re.search("[0-9]{12}", aadhar_value)
-        #if not aadhar_valid:
-        #    flash(u'Enter a 12 digit aadhar number', 'error')
-        #
-        #phone_valid = re.search("[0-9]{10}", phone_value)
-        #if not phone_valid:
-        #    flash(u'Enter a 10 digit phone number', 'error')
-        
-        #if password1_value != password2_value:
-        #    flash(u'Password and Re-enter password field should match','error')
-
         check1 = ifPatientEmailRegistered(emailAddress_value)
         check2 = ifPatientAadharRegistered(aadhar_value)
         check = check1 and check2 
@@ -118,7 +103,13 @@ def PatientLogin():
             flash('Login failed. Check your email and password', 'danger')
             return render_template('patient-login.html')
         else:
-            return "Vaccination Report"
+            pid = get_pid(emailAddress_value)
+            patient = get_patient_report_details(pid)
+            did = get_did_from_pid(pid)
+            doctor = get_doctor_report_details(did)
+            vid = get_vid(emailAddress_value)
+            center = get_center_report_details(vid)
+            return render_template('vaccination-report.html',patient = patient,center = center, doctor=doctor)
     return render_template('patient-login.html')
 
 
@@ -244,24 +235,36 @@ def statistics():
     vid_comirnaty = get_vid_for_vaccine('Comirnaty')
     comirnaty_count = get_patients_of_each_vaccine(vid_comirnaty, 0)
     dob = get_dob()
-    for dt in dob:
-        today = date.today()
-        age = today.year - dt.year - ((today.month, today.day) < (dt.month, dt.day))
-        if age >= 30 and age < 40:
-            age30 = age30 + 1
-        elif age >=40 and age < 50:
-            age40 = age40 + 1
-        elif age >= 50 and age < 60:
-            age50 = age50 + 1
-        elif age >=60 and age < 70:
-            age60 = age60 + 1
-        elif age >= 70 and age < 80:
-            age70 = age70 + 1
-        elif age >= 80 and age < 90:
-            age80 = age80 + 1
+    age60 = 0
+    age30 = 0
+    age40 = 0
+    age50 = 0
+    age70 = 0
+    age80 = 0
+    # for dob in dob:
+    #     dob = datetime.strptime(dob, '%Y-%m-%d')
+    #     dob = dob.date()
+    #     today = date.today()
+    #     age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
+    #     if age >= 30 and age < 40:
+    #         age30 = age30 + 1
+    #     elif age >=40 and age < 50:
+    #         age40 = age40 + 1
+    #     elif age >= 50 and age < 60:
+    #         age50 = age50 + 1
+    #     elif age >= 60 and age < 70:
+    #         age60 = age60 + 1
+    #     elif age >= 70 and age < 80:
+    #         age70 = age70 + 1
+    #     elif age >= 80 and age < 90:
+    #         age80 = age80 + 1
 
+    
 
-    return render_template('statistics.html', males= males, females=females, covishield= covishield_count, covaxin=covaxin_count, comirnaty=comirnaty_count)
+    print(age60) 
+    print(age50)
+    print(age70)
+    return render_template('statistics.html',age30 = age30, age40 = age40, age50 = age50, age60 = age60,age70 = age70, age80 = age80, males= males, females=females, covishield= covishield_count, covaxin=covaxin_count, comirnaty=comirnaty_count)
 
 if __name__ == "__main__":
     app.run(debug=True)
