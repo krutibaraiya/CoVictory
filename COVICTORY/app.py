@@ -4,6 +4,7 @@ from DB_Operations import *
 import re
 from flask_login import login_required, logout_user, login_user, login_manager, LoginManager
 from datetime import datetime, timedelta, date
+from flask_mail import Mail, Message
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
@@ -14,16 +15,37 @@ login_manager.init_app(app)
 def load_user(user_id):
     return user_id
 
+mail= Mail(app)
+ 
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'developercovictory@gmail.com'
+app.config['MAIL_PASSWORD'] = 'covictory_admin21'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
 
-
-@app.route("/")
+@app.route("/", methods=["GET","POST"])
 def home():
     centers = get_total_centers()
     doctors = get_total_doctors()
     patients = get_total_patients()
+    if request.method == "POST":
+        feedback_value = request.form["feedback"]
+        feedback(feedback_value)
     return render_template('home.html', centers = centers, doctors= doctors, patients = patients)
 
+@app.route("/admin-login/",methods=["GET", "POST"])
+def adminLogin():
+    if request.method == "POST":
+        email = request.form["emailAddress"]
+        password = request.form["password"]
 
+        if email == 'CoVictory21@gmail.com' and password == 'admin_covictory21':
+            return redirect(url_for('admin'))
+        else:
+            return redirect(url_for('admin'))
+    return render_template('admin-login.html')
 @app.route("/admin", methods=["GET","POST"])
 def admin():
     return render_template('admin.html')
@@ -36,6 +58,12 @@ def DoctorHome():
     name = get_doctor_name(did)
     return render_template('doctor-home.html', name = name)
 
+@app.route("/mail-report/",methods=["GET","POST"])
+def mailReport():
+   msg = Message('Hello', sender = 'developercovictory@gmail.com', recipients = [session['p_email']])
+   msg.body = "Hello Flask message sent from Flask-Mail"
+   mail.send(msg)
+   return redirect(url_for('vaccinationReport'))
 
 @app.route("/vaccination-center/", methods=["GET", "POST"])
 def VaccinationCenter():
@@ -70,7 +98,6 @@ def PatientRegister():
         aadhar_value = request.form["aadhar"]
         phone_value = request.form["phone"]
         password1_value = request.form["password1"]
-        password2_value = request.form["password2"]
 
         check1 = ifPatientEmailRegistered(emailAddress_value)
         check2 = ifPatientAadharRegistered(aadhar_value)
@@ -81,6 +108,7 @@ def PatientRegister():
             pid = get_pid(emailAddress_value)
             did = get_slot_did(session['vid_value'], session['slot_date'], session['slot_time'])
             patient_vaccination(pid, session['vid_value'], did, session['slot_date'], session['slot_time'])
+            vaccination_report(pid, did, 'registered')
             return redirect(url_for('PatientLogin'))    
         else:
             if check1:
@@ -96,6 +124,7 @@ def PatientLogin():
     check = True
     if request.method == "POST":
         emailAddress_value = request.form["emailAddress"]
+        session['p_email'] = emailAddress_value
         password_value = request.form["password"]
         check = ifPatientExist(emailAddress_value, password_value)
 
@@ -103,16 +132,35 @@ def PatientLogin():
             flash('Login failed. Check your email and password', 'danger')
             return render_template('patient-login.html')
         else:
-            pid = get_pid(emailAddress_value)
-            patient = get_patient_report_details(pid)
-            did = get_did_from_pid(pid)
-            doctor = get_doctor_report_details(did)
-            vid = get_vid(emailAddress_value)
-            center = get_center_report_details(vid)
-            return render_template('vaccination-report.html',patient = patient,center = center, doctor=doctor)
+            return redirect(url_for('vaccinationReport'))
     return render_template('patient-login.html')
 
+@app.route("/vaccination-report/",methods=["GET","POST"])
+def vaccinationReport():
+    pid = get_pid(session['p_email'])
+    patient = get_patient_report_details(pid)
+    did = get_did_from_pid(pid)
+    doctor = get_doctor_report_details(did)
+    vid = get_vid(session['p_email'])
+    center = get_center_report_details(vid)
+    date1 = get_date(pid)
+    date2 = datetime.strptime(date1, "%Y-%m-%d")+timedelta(days=28)
+    date2 = date2.date()
+    status = get_status(pid)
+    return render_template('vaccination-report.html',status = status, patient = patient,center = center, doctor=doctor, date1 = date1, date2 = date2)
 
+@app.route("/vaccination-report-doctor/",methods=["GET","POST"])
+def vaccinationReportDoctor(pid):
+    patient = get_patient_report_details(pid)
+    did = get_did_from_pid(pid)
+    doctor = get_doctor_report_details(did)
+    vid = get_vid(session['p_email'])
+    center = get_center_report_details(vid)
+    date1 = get_date(pid)
+    date2 = datetime.strptime(date1, "%Y-%m-%d")+timedelta(days=28)
+    date2 = date2.date()
+    status = get_status(pid)
+    return render_template('vaccination-report.html',status = status, patient = patient,center = center, doctor=doctor, date1 = date1, date2 = date2)
 @app.route("/doctor-register/", methods=["POST", "GET"])
 def DoctorRegister():
     if request.method == "POST":
@@ -203,6 +251,12 @@ def PatientLogout():
 def DoctorLogout():
     logout_user()
     return redirect(url_for('DoctorLogin'))
+
+@login_required
+@app.route("/admin-logout/",methods=["GET","POST"])
+def AdminLogout():
+    logout_user()
+    return redirect(url_for('adminLogin'))
 
 @app.route("/vaccination-center-details/", methods=["GET","POST"])
 def vaccintionCenterDetails():

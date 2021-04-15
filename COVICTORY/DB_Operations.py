@@ -165,7 +165,7 @@ def get_patients_of_each_vaccine(centers, sum):
     return sum
 
 
-def get_status(status):
+def get_status_count(status):
     cursor.execute("SELECT COUNT(*) FROM VACCINATION_REPORT WHERE status = %s",(status))
     status = [v for v in cursor.fetchone()][0]
     return status
@@ -240,3 +240,23 @@ def get_doctor_report_details(did):
     cursor.execute("SELECT dname, d_email FROM DOCTOR WHERE did = %s",(did))
     doctor = cursor.fetchone()
     return doctor
+
+def vaccination_report(pid, did, status):
+    cursor.execute("INSERT INTO VACCINATION_REPORT(pid,did,status) VALUES (%s, %s, %s)", (pid, did, status))
+    connection.commit()
+    return 1
+
+def feedback(feedback):
+    cursor.execute("INSERT INTO FEEDBACK(feedback) VALUES (%s)",(feedback))
+    connection.commit()
+    return 1
+
+def get_date(pid):
+    cursor.execute("SELECT s_date FROM VACCINATION WHERE pid = %s",(pid))
+    date = [v for v in cursor.fetchone()][0]
+    return date
+
+def get_status(pid):
+    cursor.execute("SELECT status FROM VACCINATION_REPORT WHERE pid = %s",(pid))
+    status = cursor.fetchone()
+    return status
