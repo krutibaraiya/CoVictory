@@ -1,5 +1,6 @@
 <html>
 <head>
+	<link rel="stylesheet" href="{{url_for('static', filename = 'css/styles.css')}}">
 <script>
 window.onload = function() {
 
@@ -63,10 +64,17 @@ $("#myCanvas").CanvasJSChart(options);
 }
 </script>
 </head>
-<body>
+<body background="{{url_for('static', filename = 'images/background-transparent.png')}}">
+    
+    
+    <br><br><br>
 <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+<br>
 <div id="chartContainer1" style="height: 370px; width: 100%;"></div>
+
+<br>
 <div id="myCanvas" style="height: 370px; width: 100%;"></div>
+<br>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>

@@ -219,9 +219,9 @@ def doctorDetails():
     doctors = get_doctor_details()
     all_did = get_did_for_all_doctors()
     total_doctors = get_total_doctors()
-    qualifications = [[total_doctors]]
-    qualifications = get_qualification(all_did, qualifications, total_doctors)
-    return render_template('doctor-details.html',doctors=doctors, qualifications=qualifications)
+    # qualifications = [[total_doctors]]
+    # qualifications = get_qualification(all_did, qualifications, total_doctors)
+    return render_template('doctor-details.html',doctors=doctors)
 
 
 @app.route("/statistics/",methods=["GET", "POST"])
@@ -234,7 +234,6 @@ def statistics():
     covaxin_count = get_patients_of_each_vaccine(vid_covaxin, 0)
     vid_comirnaty = get_vid_for_vaccine('Comirnaty')
     comirnaty_count = get_patients_of_each_vaccine(vid_comirnaty, 0)
-    dob = get_dob()
     age60 = 0
     age30 = 0
     age40 = 0
@@ -265,6 +264,8 @@ def statistics():
     print(age50)
     print(age70)
     return render_template('statistics.html',age30 = age30, age40 = age40, age50 = age50, age60 = age60,age70 = age70, age80 = age80, males= males, females=females, covishield= covishield_count, covaxin=covaxin_count, comirnaty=comirnaty_count)
+    return render_template('statistics.html', males= males, females=females, covishield= covishield_count, covaxin=covaxin_count, comirnaty=comirnaty_count)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
