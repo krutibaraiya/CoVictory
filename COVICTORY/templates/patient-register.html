@@ -96,7 +96,7 @@
                     <label for="aadhar" class="col-4 col-form-label-sm text-right">Aadhar number:</label> 
                     <div class="col-8">
                       <div class="input-group">
-                        <input id="aadhar" name="aadhar" type="number" class="form-control form-control-sm" aria-describedby="inputGroupPrepend" pattern="[0-9]{12}" required>
+                        <input id="aadhar" name="aadhar" type="text" class="form-control form-control-sm" aria-describedby="inputGroupPrepend" pattern="[0-9]{12}" required>
                         <div class = "invalid-feedback">
                           Please enter a valid aadhar number
                         </div>
@@ -107,7 +107,7 @@
                     <label for="dob" class="col-4 col-form-label-sm text-right">Date of Birth:</label> 
                     <div class="col-8">
                       <div class="input-group">
-                        <input id="dob" name="dob" type="text" class="form-control form-control-sm" aria-describedby="inputGroupPrepend" placeholder="dd-mm-yyyy" required>
+                        <input id="dob" name="dob" type="date" class="form-control form-control-sm" aria-describedby="inputGroupPrepend" placeholder="yyyy-mm-dd" required>
                         <div class = "invalid-feedback">
                           Please enter a valid date of birth
                         </div>
@@ -118,7 +118,7 @@
                     <label for="phone" class="col-4 col-form-label-sm text-right">Phone number:</label> 
                     <div class="col-8">
                       <div class="input-group">
-                        <input id="phone" name="phone" type="number" class="form-control form-control-sm" pattern="[0-9]{10}" aria-describedby="inputGroupPrepend" required>
+                        <input id="phone" name="phone" type="text" class="form-control form-control-sm" pattern="[0-9]{10}" aria-describedby="inputGroupPrepend" required>
                         <div class = "invalid-feedback">
                           Please enter a valid phone number
                         </div>
@@ -175,6 +175,7 @@
         {% endfor %}
         
       </table> -->
-      <script src = "{{url_for('static',filename='javascript/validate.js')}}"></script> 
+      <script src = "{{url_for('static',filename='javascript/validate.js')}}"></script>
+      <script src = "{{url_for('static',filename='javascript/password.js')}}"></script> 
 </body>
 </html>

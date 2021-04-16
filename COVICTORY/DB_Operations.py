@@ -1,5 +1,5 @@
 import pymysql
-
+import datetime as dt
 
 #database connection
 connection = pymysql.connect(host="localhost", 
@@ -260,3 +260,15 @@ def get_status(pid):
     cursor.execute("SELECT status FROM VACCINATION_REPORT WHERE pid = %s",(pid))
     status = [v for v in cursor.fetchone()][0]
     return status
+
+
+def get_dob(str):
+    today = dt.date.today()
+    #str = input("Give your date of birth in yyyy-mm-dd: ")
+    year = int(str[0:4])
+    month = int(str[5:7])
+    d = int(str[8:])
+    b_date = dt.date(year,month,d)
+    t_difference = today - b_date
+    age = t_difference.days
+    return (int(age/365))

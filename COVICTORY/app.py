@@ -1,10 +1,12 @@
 from flask import Flask, request, render_template, redirect, url_for, flash, session
 from email_validator import validate_email
 from DB_Operations import *
+
 import re
 from flask_login import login_required, logout_user, login_user, login_manager, LoginManager
 from datetime import datetime, timedelta, date
 from flask_mail import Mail, Message
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
@@ -143,6 +145,7 @@ def PatientLogin():
 def vaccinationReport():
     pid = get_pid(session['p_email'])
     patient = get_patient_report_details(pid)
+    dob = get_dob(patient[4])
     did = get_did_from_pid(pid)
     doctor = get_doctor_report_details(did)
     vid = get_vid(session['p_email'])
@@ -151,7 +154,7 @@ def vaccinationReport():
     date2 = datetime.strptime(date1, "%Y-%m-%d")+timedelta(days=28)
     date2 = date2.date()
     status = get_status(pid)
-    return render_template('vaccination-report.html',status = status, patient = patient,center = center, doctor=doctor, date1 = date1, date2 = date2)
+    return render_template('vaccination-report.html',status = status, patient = patient,center = center, doctor=doctor, date1 = date1, date2 = date2, dob = dob)
 
 
 @app.route("/doctor-register/", methods=["POST", "GET"])
