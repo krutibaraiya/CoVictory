@@ -36,7 +36,7 @@
         {% endblock  %}
         </div>
         <br><br><br>
-    <form class="form-compact" action="/doctor-slot/" method="post" >
+    <form class="form-compact needs-validation" action="/doctor-slot/" method="post" novalidate>
         <div class="row paddingBottom20">
             <div class="container col-4" style= "background-color: #daf3f7">
                 <div class="row">
@@ -48,9 +48,9 @@
                     <label for="slot_date" class="col-4 col-form-label-sm text-right">Slot Date:</label> 
                     <div class="col-8">
                       <div class="input-group"> 
-                        <input id="slot_date" name="slot_date" type="date" class="form-control form-control-sm" required>
-                        <div class = "invalid-feedback"
-                            Please select a slot date
+                        <input id="slot_date" name="slot_date" type="date" class="form-control form-control-sm" aria-describedby="inputGroupPrepend" required>
+                        <div class = "invalid-feedback">
+                            Please select a slot date>
                         </div>
                       </div>
                     </div>
@@ -61,8 +61,8 @@
                     <label for="slot_time" class="col-4 col-form-label-sm text-right">Slot Time:</label> 
                     <div class="col-8">
                       <div class="input-group"> 
-                        <input id="slot_time" name="slot_time" type="time" class="form-control form-control-sm" required>
-                        <div class = "invalid-feedback"
+                        <input id="slot_time" name="slot_time" type="time" class="form-control form-control-sm" aria-describedby="inputGroupPrepend" required>
+                        <div class = "invalid-feedback">
                             Please select a slot time
                         </div>
                       </div>
