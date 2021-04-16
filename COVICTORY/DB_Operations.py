@@ -116,7 +116,7 @@ def AssignSlot(vid, slot_date, slot_time, did):
     return 1
 
 
-def patient_vaccination(pid, vid, did, slot_date, slot_time):
+def patient_vaccination(pid, vid, did, slot_time, slot_date):
     cursor.execute("INSERT INTO VACCINATION(pid,vid,did,s_time,s_date) VALUES (%s, %s, %s, %s, %s)",(pid,vid,did,slot_time,slot_date))
     connection.commit()
     return 1
@@ -258,5 +258,5 @@ def get_date(pid):
 
 def get_status(pid):
     cursor.execute("SELECT status FROM VACCINATION_REPORT WHERE pid = %s",(pid))
-    status = cursor.fetchone()
+    status = [v for v in cursor.fetchone()][0]
     return status

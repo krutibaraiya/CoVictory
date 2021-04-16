@@ -50,6 +50,10 @@ def adminLogin():
 def admin():
     return render_template('admin.html')
 
+@app.route("/developer/",methods=["GET","POST"])
+def developer():
+    return render_template('developer.html')
+
 
 @login_required
 @app.route("/doctor-home/",methods=["GET", "POST"])
@@ -81,8 +85,9 @@ def Slot():
     if request.method == "POST":
         slot_value = request.form["slot"]
         slots = slot_value.split(',')     
-        session['slot_date'] = slots[0]
-        session['slot_time'] = slots[1]
+        session['slot_date'] = slots[1]
+        session['slot_time'] = slots[0]
+        session['did'] = get_slot_did(session['vid_value'], session['slot_date'], session['slot_time'])
         return redirect(url_for('PatientRegister'))
     return render_template('slot.html', slots = slots, dropdown_slots=dropdown_slots)
 
@@ -106,9 +111,8 @@ def PatientRegister():
         if not check:
             patient_register(firstName_value, lastName_value, emailAddress_value, password1_value, gender_value, dob_value, aadhar_value, phone_value)
             pid = get_pid(emailAddress_value)
-            did = get_slot_did(session['vid_value'], session['slot_date'], session['slot_time'])
-            patient_vaccination(pid, session['vid_value'], did, session['slot_date'], session['slot_time'])
-            vaccination_report(pid, did, 'registered')
+            patient_vaccination(pid, session['vid_value'], session['did'], session['slot_time'], session['slot_date'])
+            vaccination_report(pid, session['did'], 'registered')
             return redirect(url_for('PatientLogin'))    
         else:
             if check1:
@@ -149,18 +153,7 @@ def vaccinationReport():
     status = get_status(pid)
     return render_template('vaccination-report.html',status = status, patient = patient,center = center, doctor=doctor, date1 = date1, date2 = date2)
 
-@app.route("/vaccination-report-doctor/",methods=["GET","POST"])
-def vaccinationReportDoctor(pid):
-    patient = get_patient_report_details(pid)
-    did = get_did_from_pid(pid)
-    doctor = get_doctor_report_details(did)
-    vid = get_vid(session['p_email'])
-    center = get_center_report_details(vid)
-    date1 = get_date(pid)
-    date2 = datetime.strptime(date1, "%Y-%m-%d")+timedelta(days=28)
-    date2 = date2.date()
-    status = get_status(pid)
-    return render_template('vaccination-report.html',status = status, patient = patient,center = center, doctor=doctor, date1 = date1, date2 = date2)
+
 @app.route("/doctor-register/", methods=["POST", "GET"])
 def DoctorRegister():
     if request.method == "POST":
@@ -288,36 +281,6 @@ def statistics():
     covaxin_count = get_patients_of_each_vaccine(vid_covaxin, 0)
     vid_comirnaty = get_vid_for_vaccine('Comirnaty')
     comirnaty_count = get_patients_of_each_vaccine(vid_comirnaty, 0)
-    age60 = 0
-    age30 = 0
-    age40 = 0
-    age50 = 0
-    age70 = 0
-    age80 = 0
-    # for dob in dob:
-    #     dob = datetime.strptime(dob, '%Y-%m-%d')
-    #     dob = dob.date()
-    #     today = date.today()
-    #     age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
-    #     if age >= 30 and age < 40:
-    #         age30 = age30 + 1
-    #     elif age >=40 and age < 50:
-    #         age40 = age40 + 1
-    #     elif age >= 50 and age < 60:
-    #         age50 = age50 + 1
-    #     elif age >= 60 and age < 70:
-    #         age60 = age60 + 1
-    #     elif age >= 70 and age < 80:
-    #         age70 = age70 + 1
-    #     elif age >= 80 and age < 90:
-    #         age80 = age80 + 1
-
-    
-
-    print(age60) 
-    print(age50)
-    print(age70)
-    return render_template('statistics.html',age30 = age30, age40 = age40, age50 = age50, age60 = age60,age70 = age70, age80 = age80, males= males, females=females, covishield= covishield_count, covaxin=covaxin_count, comirnaty=comirnaty_count)
     return render_template('statistics.html', males= males, females=females, covishield= covishield_count, covaxin=covaxin_count, comirnaty=comirnaty_count)
 
 
