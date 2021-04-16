@@ -216,8 +216,8 @@ def DoctorSlot():
            AssignSlot(vid, date.date(),slot_time, session['did'])
            return render_template('doctor-slot.html')
        else:
-            flash('This slot is already assigned to other doctor. Please select a different slot.', 'error')
-            return render_template('doctor-slot.html') 
+            flash('This slot is already assigned to other doctor. Please select a different slot.')
+            return render_template('doctor-slot.html')
     return render_template('doctor-slot.html')
 
 

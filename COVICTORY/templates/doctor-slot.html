@@ -48,7 +48,10 @@
                     <label for="slot_date" class="col-4 col-form-label-sm text-right">Slot Date:</label> 
                     <div class="col-8">
                       <div class="input-group"> 
-                        <input id="slot_date" name="slot_date" type="date" class="form-control form-control-sm">
+                        <input id="slot_date" name="slot_date" type="date" class="form-control form-control-sm" required>
+                        <div class = "invalid-feedback"
+                            Please select a slot date
+                        </div>
                       </div>
                     </div>
                 </div>
@@ -58,7 +61,10 @@
                     <label for="slot_time" class="col-4 col-form-label-sm text-right">Slot Time:</label> 
                     <div class="col-8">
                       <div class="input-group"> 
-                        <input id="slot_time" name="slot_time" type="time" class="form-control form-control-sm">
+                        <input id="slot_time" name="slot_time" type="time" class="form-control form-control-sm" required>
+                        <div class = "invalid-feedback"
+                            Please select a slot time
+                        </div>
                       </div>
                     </div>
                 </div>
@@ -72,6 +78,6 @@
         </div>
     </form>
 
-        
+    <script src = "{{url_for('static',filename='javascript/validate.js')}}"></script>
 </body>
 </html>
