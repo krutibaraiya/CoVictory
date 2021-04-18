@@ -283,7 +283,3 @@ def get_dob(str):
     age = t_difference.days
     return (int(age/365))
 
-def feedback(feedback):
-   cursor.execute("INSERT INTO FEEDBACK(feedback) VALUES (%s)",(feedback))
-   connection.commit()
-   return 1
