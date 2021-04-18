@@ -15,16 +15,16 @@
 <body background = "{{url_for('static', filename = 'images/background-transparent.png')}}">
 
 <nav class="navbar navbar-dark bg-dark" style="padding-top: 2px ;padding-bottom:2px; padding-left: 10px;">
-  <a class="navbar-brand"><h3>CoVictory</h3></a>
+  <a class="navbar-brand"><h1>CoVictory</h1></a>
   <ul class="list-group list-group-horizontal">
-  <li class="list-group-item list-group-item-action bg-dark text-white"><a class="nav-link text-white" href="/admin-logout">Logout</a></li>
+  <li class="list-group-item list-group-item-action bg-dark text-white"><a class="nav-link text-white" href="/patient-login">Logout</a></li>
   </ul>
 </nav>
 
-<h1 class="text-center" style="margin: 40px 25px 0px 25px;"><mark>Hello {{patient[0]}} {{patient[1]}} !!!</mark></h2>
+<h1 class="text-center" style="margin: 40px 25px 0px 25px;"><mark>Hello {{patient[0]}} {{patient[1]}} !</mark></h2>
 
-<button type="button" class="btn btn-secondary btn-lg btn-block" onclick="saveDiv('pdf','Title')" 
-  style="margin: 0rem 0rem 1rem 5rem;" >Mail me Report</button>
+<button type="button" class="btn btn-secondary btn-lg btn-block" onclick="saveDiv('pdf','Title')"
+  style="margin: 0rem 0rem 1rem 5rem;" >Download Report</button>
 
 <div class="container bg-light border shadow-lg p-4 mb-4" id="pdf" 
   style="margin: 0rem 2rem 2rem 5rem; padding-top: 2rem;padding-bottom: 1rem; ">
@@ -74,8 +74,8 @@
     <thead class="table-light">
       <tr>
         <th scope="col" style="width: 5%">Status</th>
-        <th scope="col" style="width: 20%">Date1</th>
-        <th scope="col" style="width: 20%">Date2</th>
+        <th scope="col" style="width: 20%">Date of 1st Dose</th>
+        <th scope="col" style="width: 20%">Date of 2nd Dose</th>
         <th scope="col" style="width: 20%">Remark</th>
       </tr>
     </thead>
@@ -89,6 +89,9 @@
     </tbody>
   </table>
 </div>
+
+<button type="button" class="btn btn-secondary btn-lg btn-block" href="/mail-report/"
+  style="margin: 0rem 0rem 1rem 5rem;" >Mail me Report</button>
 
 <script type="text/javascript">
   var doc = new jsPDF();

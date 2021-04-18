@@ -71,10 +71,41 @@ def DoctorHome():
 
 @app.route("/mail-report/",methods=["GET","POST"])
 def mailReport():
-   msg = Message('Hello', sender = 'developercovictory@gmail.com', recipients = [session['p_email']])
-   msg.body = "Hello Flask message sent from Flask-Mail"
+   msg = Message('CoVictory Vaccination Report', sender = 'developercovictory@gmail.com', recipients = [session['p_email']])
+   pid = get_pid(session['p_email'])
+   patient = get_patient_report_details(pid)
+   dob = get_dob(patient[4])
+   did = get_did_from_pid(pid)
+   phno = get_doctor_phno(did)
+   doctor = get_doctor_report_details(did)
+   vid = get_vid(session['p_email'])
+   center = get_center_report_details(vid)
+   date1 = get_date(pid)
+   date2 = datetime.strptime(date1, "%Y-%m-%d")+timedelta(days=28)
+   date2 = date2.date()
+   status = get_status(pid)
+
+   messageBody = f"""
+   Vaccination Report for {patient[0]} {patient[1]}
+   Center Name: {center[1]}
+   Doctor Name: {doctor[0]}
+   City: {center[0]}
+   Doctor's email: {doctor[1]}
+   
+
+   Age: {dob}
+   Gender: {patient[3]}
+   Date of 1st Dose: {date1}
+   Date of 2nd Dose: {date2}
+
+
+
+   Sent to you by the CoVictory Team
+   """
+   
+   msg.body = messageBody
    mail.send(msg)
-   return redirect(url_for('vaccinationReport'))
+   return render_template('vaccination-report.html',status = status, patient = patient,center = center, doctor=doctor, date1 = date1, date2 = date2, dob = dob)
 
 @app.route("/vaccination-center/", methods=["GET", "POST"])
 def VaccinationCenter():
@@ -148,17 +179,42 @@ def PatientLogin():
 
 @app.route("/vaccination-report/",methods=["GET","POST"])
 def vaccinationReport():
+    msg = Message('CoVictory Vaccination Report', sender = 'developercovictory@gmail.com', recipients = [session['p_email']])
     pid = get_pid(session['p_email'])
     patient = get_patient_report_details(pid)
     dob = get_dob(patient[4])
     did = get_did_from_pid(pid)
     doctor = get_doctor_report_details(did)
     vid = get_vid(session['p_email'])
+    phno = get_doctor_phno(did)
     center = get_center_report_details(vid)
     date1 = get_date(pid)
     date2 = datetime.strptime(date1, "%Y-%m-%d")+timedelta(days=28)
     date2 = date2.date()
     status = get_status(pid)
+
+    #if request.method == "POST":
+    #    messageBody = f"""
+    #    Vaccination Report for {patient[0]} {patient[1]}
+    #    Center Name: {center[1]}
+    #    Doctor Name: {doctor[0]}
+    #    City: {center[0]}
+    #    Doctor's email: {doctor[1]}
+    #    Doctor's phone number: {phno}
+#
+    #    Age: {dob}
+    #    Gender: {patient[3]}
+    #    Date of 1st Dose: {date1}
+    #    Date of 2nd Dose: {date2}
+#
+#
+#
+    #    Sent to you by CoVictory Team
+    #    """
+#
+    #    msg.body = messageBody
+    #    mail.send(msg)
+
     return render_template('vaccination-report.html',status = status, patient = patient,center = center, doctor=doctor, date1 = date1, date2 = date2, dob = dob)
 
 

@@ -4,7 +4,7 @@ import datetime as dt
 #database connection
 connection = pymysql.connect(host="localhost", 
                             user="root", 
-                            passwd="kruti20", 
+                            passwd="123456**oK", 
                             database="COVICTORY")
 cursor = connection.cursor()
 
@@ -240,6 +240,10 @@ def get_did_from_pid(pid):
     cursor.execute("SELECT did FROM VACCINATION WHERE pid = %s", (pid))
     did = cursor.fetchone()
     return did
+def get_doctor_phno(did):
+    cursor.execute("SELECT d_phone FROM DOCTOR WHERE did = %s",(did))
+    phno = cursor.fetchone()
+    return phno
 
 def get_doctor_report_details(did):
     cursor.execute("SELECT dname, d_email FROM DOCTOR WHERE did = %s",(did))
