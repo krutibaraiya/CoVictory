@@ -241,7 +241,6 @@ def PatientLogout():
     logout_user()
     return redirect(url_for('PatientLogin'))
 
-
 @login_required
 @app.route("/doctor-logout/",methods=["GET","POST"])
 def DoctorLogout():
