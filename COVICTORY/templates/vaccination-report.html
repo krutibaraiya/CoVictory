@@ -9,11 +9,12 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
-<script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+  <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 </head>
 
 <body background = "{{url_for('static', filename = 'images/background-transparent.png')}}">
-
+<div class='canvas_div_pdf'>
 <nav class="navbar navbar-dark bg-dark" style="padding-top: 2px ;padding-bottom:2px; padding-left: 10px;">
   <a class="navbar-brand"><h1>CoVictory</h1></a>
   <ul class="list-group list-group-horizontal">
@@ -21,13 +22,10 @@
   </ul>
 </nav>
 
-<h1 class="text-center" style="margin: 40px 25px 0px 25px;"><mark>Hello {{patient[0]}} {{patient[1]}} !</mark></h2>
-
-<button type="button" class="btn btn-secondary btn-lg btn-block" onclick="saveDiv('pdf','Title')"
-  style="margin: 0rem 0rem 1rem 5rem;" >Download Report</button>
-
+<h2 class="text-center" style="margin: 40px 25px 0px 25px;">Hello {{patient[0]}} {{patient[1]}} !</h2>
+<br>
 <div class="container bg-light border shadow-lg p-4 mb-4" id="pdf" 
-  style="margin: 0rem 2rem 2rem 5rem; padding-top: 2rem;padding-bottom: 1rem; ">
+  style="margin-left: auto; margin-right: auto; padding-top: 5rem;padding-bottom: 1rem; ">
 
     <table class="table table-borderless table-light text-left" style="width: 100%">
     <thead class="table-light">
@@ -89,17 +87,46 @@
     </tbody>
   </table>
 </div>
-
+</div>
 <button type="button" class="btn btn-secondary btn-lg btn-block" href="/mail-report/"
-  style="margin: 0rem 0rem 1rem 5rem;" >Mail me Report</button>
+  style="margin: 0rem 0rem 1rem 12rem;" >Mail me Report</button>
+
+<button type="button" class="btn btn-secondary btn-lg btn-block" onclick="getPDF()"
+  style="margin: 0rem 0rem 1rem 37rem;" >Download Report</button>
 
 <script type="text/javascript">
-  var doc = new jsPDF();
+  function getPDF(){
 
-   function saveDiv(divId, title) {
-   doc.fromHTML(`<html><head><title>${title}</title></head><body>` + document.getElementById(divId).innerHTML + `</body></html>`);
-   doc.save('VaccinationReport.pdf');
-    }
+		var HTML_Width = $(".canvas_div_pdf").width();
+		var HTML_Height = $(".canvas_div_pdf").height();
+		var top_left_margin = 15;
+		var PDF_Width = HTML_Width+(top_left_margin*2);
+		var PDF_Height = (PDF_Width*1.5)+(top_left_margin*2);
+		var canvas_image_width = HTML_Width;
+		var canvas_image_height = HTML_Height;
+		
+		var totalPDFPages = Math.ceil(HTML_Height/PDF_Height)-1;
+		
+
+		html2canvas($(".canvas_div_pdf")[0],{allowTaint:true}).then(function(canvas) {
+			canvas.getContext('2d');
+			
+			console.log(canvas.height+"  "+canvas.width);
+			
+			
+			var imgData = canvas.toDataURL("image/jpeg", 1.0);
+			var pdf = new jsPDF('p', 'pt',  [PDF_Width, PDF_Height]);
+		    pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin,canvas_image_width,canvas_image_height);
+			
+			
+			for (var i = 1; i <= totalPDFPages; i++) { 
+				pdf.addPage(PDF_Width, PDF_Height);
+				pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*i)+(top_left_margin*4),canvas_image_width,canvas_image_height);
+			}
+			
+		    pdf.save("HTML-Document.pdf");
+        });
+	};
 </script>
 
 </body>
