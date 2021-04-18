@@ -4,7 +4,7 @@ import datetime as dt
 #database connection
 connection = pymysql.connect(host="localhost", 
                             user="root", 
-                            passwd="123456**oK", 
+                            passwd="kruti20", 
                             database="COVICTORY")
 cursor = connection.cursor()
 
@@ -207,18 +207,23 @@ def get_did_for_all_doctors():
     return did
 
 def get_qualification(did, qualifications, k):
+    listoflists = [] 
     for i in did:
         cursor.execute("SELECT qualification FROM QUALIFICATION WHERE did = %s",(i))
-        qualification = cursor.fetchall()
-        qualifications[k] = qualifications[k] + qualification
-        k = k + 1
-    return qualifications
+        qualification =  [v for v in cursor.fetchall()]
+        tuple_to_list = [item for t in qualification for item in t]
+        # print(tuple_to_list)
+        listoflists.append(tuple_to_list)
+        listoflists.reverse()
+        
+    print(listoflists)     
+    return listoflists
 
 
-def get_dob():
-    cursor.execute("SELECT dob FROM PATIENT")
-    dob = [v for v in cursor.fetchone()][0]
-    return dob
+# def get_dob():
+#     cursor.execute("SELECT dob FROM PATIENT")
+#     dob = [v for v in cursor.fetchone()][0]
+#     return dob
 
 def get_patient_report_details(pid):
     cursor.execute("SELECT fname, lname, p_email, gender, dob, aadhar_id, p_phone FROM PATIENT WHERE pid = %s",(pid))

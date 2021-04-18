@@ -273,9 +273,11 @@ def doctorDetails():
     doctors = get_doctor_details()
     all_did = get_did_for_all_doctors()
     total_doctors = get_total_doctors()
-    # qualifications = [[total_doctors]]
-    # qualifications = get_qualification(all_did, qualifications, total_doctors)
-    return render_template('doctor-details.html',doctors=doctors)
+    qualifications = [[total_doctors]]
+    qualifications = get_qualification(all_did, qualifications, total_doctors)
+    # print(qualifications)
+    x = len(doctors)
+    return render_template('doctor-details.html',doctors=doctors, qualifications=qualifications,x=x)
 
 
 @app.route("/statistics/",methods=["GET", "POST"])

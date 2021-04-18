@@ -48,13 +48,15 @@
     </tr>
   </thead>
   <tbody>
-    {% for doctor in doctors %}
+    {% for i in range(x) %}
     <tr><SPAN>
-      <td>{{ doctor[0] }}</td>
-      <td>{{ doctor[1] }}</td>
-      <td>{{ doctor[2] }}</td>
-      <td>{{ doctor[3] }}</td>
+      <td>{{ doctors[i][0] }}</td>
+      <td>{{ doctors[i][1] }}</td>
+      <td>{{ doctors[i][2] }}</td>
+      <td>{{ doctors[i][3] }}</td>
+      <td>{{ ", ".join(qualifications[i]) }}</td>
       {% endfor %}
+
     </SPAN></tr>
 
   </tbody>
