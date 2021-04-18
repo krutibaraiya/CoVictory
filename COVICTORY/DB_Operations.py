@@ -12,7 +12,7 @@ cursor = connection.cursor()
 
 def get_centers():
     cursor.execute("SELECT * FROM VACCINATION_CENTER")
-    centers = cursor.fetchall()    
+    centers = cursor.fetchall()
     return centers
 
 def get_patients(did):
@@ -251,6 +251,11 @@ def feedback(feedback):
     connection.commit()
     return 1
 
+def get_feedback():
+    cursor.execute("SELECT * FROM FEEDBACK")
+    f = cursor.fetchall()
+    return f
+
 def get_date(pid):
     cursor.execute("SELECT s_date FROM VACCINATION WHERE pid = %s",(pid))
     date = [v for v in cursor.fetchone()][0]
@@ -272,3 +277,8 @@ def get_dob(str):
     t_difference = today - b_date
     age = t_difference.days
     return (int(age/365))
+
+def feedback(feedback):
+   cursor.execute("INSERT INTO FEEDBACK(feedback) VALUES (%s)",(feedback))
+   connection.commit()
+   return 1

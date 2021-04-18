@@ -37,6 +37,11 @@ def home():
         feedback(feedback_value)
     return render_template('home.html', centers = centers, doctors= doctors, patients = patients)
 
+@app.route("/feedback/", methods=["GET","POST"])
+def feedback_page():
+    f = get_feedback()
+    return render_template('feedback-page.html', feedback = f)
+
 @app.route("/admin-login/",methods=["GET", "POST"])
 def adminLogin():
     if request.method == "POST":
