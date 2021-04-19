@@ -369,7 +369,6 @@ def statistics():
             age70 = age70 + 1
         elif age >= 80 and age < 90:
             age80 = age80 + 1
-        print(age30)
     return render_template('statistics.html', males= males, females=females, covishield= covishield_count, covaxin=covaxin_count, comirnaty=comirnaty_count, age30 = age30, age40 = age40, age50 = age50, age60 = age60, age70 = age70, age80 = age80)
 
 
