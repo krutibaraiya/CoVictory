@@ -376,5 +376,6 @@ def statistics():
     return render_template('statistics.html', registered = registered_count, phase1 = phase1_count, vaccinated = vaccinated_count, males= males, females=females, covishield= covishield_count, covaxin=covaxin_count, comirnaty=comirnaty_count, age30 = age30, age40 = age40, age50 = age50, age60 = age60, age70 = age70, age80 = age80)
 
 
+
 if __name__ == "__main__":
     app.run(debug=True)
