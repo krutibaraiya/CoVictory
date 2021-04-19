@@ -256,6 +256,11 @@ def vaccination_report(pid, did, status):
     connection.commit()
     return 1
 
+def update_report(pid, status, remarks):
+    cursor.execute("update table VACCINATION_REPORT set status = %s, remarks = %s where pid = %s", (status,remarks,pid))
+    connection.commit()
+    return 1
+
 def feedback(feedback):
     cursor.execute("INSERT INTO FEEDBACK(feedback) VALUES (%s)",(feedback))
     connection.commit()
@@ -272,7 +277,7 @@ def get_date(pid):
     return date
 
 def get_status(pid):
-    cursor.execute("SELECT status FROM VACCINATION_REPORT WHERE pid = %s",(pid))
+    cursor.execute("SELECT status, remarks FROM VACCINATION_REPORT WHERE pid = %s",(pid))
     status = [v for v in cursor.fetchone()][0]
     return status
 

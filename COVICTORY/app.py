@@ -115,6 +115,15 @@ def VaccinationCenter():
         return redirect(url_for('Slot'))
     return render_template('vaccination-center.html', centers = centers)
 
+@app.route("/patient-update/", methods=["GET, POST"])
+def PatientUpdate():
+    did = session['did']
+    patients = get_patient_details(did)
+    if request.method == 'POST':
+        session['pid'] = request.form["pid"]
+        return "Patient Report"
+    return render_template('select-patient.html', patients = patients)
+
 
 @app.route("/slot/", methods=["GET","POST"])
 def Slot():
@@ -285,15 +294,52 @@ def DoctorSlot():
     return render_template('doctor-slot.html')
 
 
+#@login_required
+#@app.route
+
 @login_required
 @app.route("/patient-list/",methods=["GET","POST"])
 def PatientList():
     patients = get_patients(session['did'])
     if request.method == 'POST':
-        query = request.form['search']
-        data = patient_list_search_bar(query)
-        return render_template('patient-list.html', patients = data)
+        session['pid'] = request.form['pid']
+        pid = session['pid']
+        patient = get_patient_report_details(pid)
+        dob = get_age(patient[4])
+        did = get_did_from_pid(pid)
+        doctor = get_doctor_report_details(did)
+        vid = get_vid(session['p_email'])
+        phno = get_doctor_phno(did)
+        center = get_center_report_details(vid)
+        date1 = get_date(pid)
+        date2 = datetime.strptime(date1, "%Y-%m-%d")+timedelta(days=28)
+        date2 = date2.date()
+        status = get_status(pid)
+        return render_template('patient-data.html',status = status, patient = patient,center = center, doctor=doctor, date1 = date1, date2 = date2, dob = dob)
     return render_template('patient-list.html', patients = patients)
+
+@app.route('/patient-data/', methods=["GET", "POST"])
+def patientData():
+    pid = session['pid']
+    patient = get_patient_report_details(pid)
+    dob = get_age(patient[4])
+    did = get_did_from_pid(pid)
+    doctor = get_doctor_report_details(did)
+    vid = get_vid(session['p_email'])
+    phno = get_doctor_phno(did)
+    center = get_center_report_details(vid)
+    date1 = get_date(pid)
+    date2 = datetime.strptime(date1, "%Y-%m-%d")+timedelta(days=28)
+    date2 = date2.date()
+    status = get_status(pid)
+    if request.method == "POST":
+        status = request.form['status']
+        remarks = request.form['remarks']
+        pid = session['pid']
+        update_report(int(pid), status, remarks)
+        return render_template('patient-data.html',remark = status[1], status = status[0], patient = patient,center = center, doctor=doctor, date1 = date1, date2 = date2, dob = dob)
+    return render_template('patient-data.html',remark = status[1], status = status[0], patient = patient,center = center, doctor=doctor, date1 = date1, date2 = date2, dob = dob)
+
 
 
 @login_required
