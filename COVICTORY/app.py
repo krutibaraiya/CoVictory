@@ -48,7 +48,7 @@ def adminLogin():
         email = request.form["emailAddress"]
         password = request.form["password"]
 
-        if email == 'CoVictory21@gmail.com' and password == 'admin_covictory21':
+        if email == 'developercovictory@gmail.com' and password == 'admin_covictory21':
             return redirect(url_for('admin'))
         else:
             return redirect(url_for('admin'))
@@ -346,6 +346,9 @@ def statistics():
     covaxin_count = get_patients_of_each_vaccine(vid_covaxin, 0)
     vid_comirnaty = get_vid_for_vaccine('Comirnaty')
     comirnaty_count = get_patients_of_each_vaccine(vid_comirnaty, 0)
+    registered_count = get_status_count('registered')
+    phase1_count = get_status_count('phase 1')
+    vaccinated_count = get_status_count('vaccinated')
     age60 = 0
     age30 = 0
     age40 = 0
@@ -369,8 +372,8 @@ def statistics():
             age70 = age70 + 1
         elif age >= 80 and age < 90:
             age80 = age80 + 1
-        print(age30)
-    return render_template('statistics.html', males= males, females=females, covishield= covishield_count, covaxin=covaxin_count, comirnaty=comirnaty_count, age30 = age30, age40 = age40, age50 = age50, age60 = age60, age70 = age70, age80 = age80)
+        print(age60)
+    return render_template('statistics.html', registered = registered_count, phase1 = phase1_count, vaccinated = vaccinated_count, males= males, females=females, covishield= covishield_count, covaxin=covaxin_count, comirnaty=comirnaty_count, age30 = age30, age40 = age40, age50 = age50, age60 = age60, age70 = age70, age80 = age80)
 
 
 if __name__ == "__main__":

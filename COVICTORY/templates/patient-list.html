@@ -37,6 +37,13 @@
 
 <input type="text" id="searchbar" onkeyup="myFunction()" placeholder="Search Table....." title="Type in a name">
 
+ <!-- <div class="search">
+  <form action="/patient-list/" class="form-inline justify-content-center" method=post>
+      <input type=text name=search value="{{ request.form.search}}"></br>
+      <div class="actions"><input type=submit value="Search"></div>
+  </form>
+  </div> -->
+
 <table class="table table-bordered table-hover table-striped table-light" id="myTable" style="margin-left: 30px;">
   <thead class="table-dark">
     <tr>
@@ -48,7 +55,7 @@
   <tbody>
     {% for patient in patients %}
     <tr><SPAN>
-      <td><a href="/vaccination-report-doctor" value = '{{patient[0]}}' style='text-decoration: none'>{{ patient[0] }}</a></td>
+      <td><a style='text-decoration: none'>{{ patient[0] }}</a></td>
       <td>{{ patient[1] }}</td>
       <td>{{ patient[2] }}</td>
     </SPAN></tr>
