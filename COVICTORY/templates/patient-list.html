@@ -21,28 +21,39 @@
       margin-left: 30px;
     }
   </style>
-
+ 
 </head>
-
+ 
 <body background="{{url_for('static', filename = 'images/background-transparent.png')}}">
-
+ 
 <nav class="navbar navbar-dark bg-dark">
   <a class="navbar-brand"><h1>CoVictory</h1></a>
   <ul class="list-group list-group-horizontal">
   <li class="list-group-item list-group-item-action bg-dark text-white"><a class="nav-link text-white" href="/doctor-home">Back</a></li>
   </ul>
 </nav>
-
+ 
 <h1 class="text-center" style="margin: 50px 25px;">Patients</h2>
-
+<form class="form-compact text-center" action="/patient-list/" method="post" style="background-color: #daf3f7;margin-left: 30px;">
+        Select Patient ID you want to view
+        <select name="pid">
+            <option></option>
+            {% for patient in patients %}
+            <option value="{{ patient[0] }}">
+                {{ patient[0] }}
+            </option>
+        {% endfor %}
+        </select>
+      <br><br>
+  <div class="text-center">
+    <input type="submit" class="btn btn-secondary" value= "Next">
+    </div>
+</form>
+ 
+<br>
+ 
 <input type="text" id="searchbar" onkeyup="myFunction()" placeholder="Search Table....." title="Type in a name">
 
- <!-- <div class="search">
-  <form action="/patient-list/" class="form-inline justify-content-center" method=post>
-      <input type=text name=search value="{{ request.form.search}}"></br>
-      <div class="actions"><input type=submit value="Search"></div>
-  </form>
-  </div> -->
 
 <table class="table table-bordered table-hover table-striped table-light" id="myTable" style="margin-left: 30px;">
   <thead class="table-dark">
@@ -62,29 +73,38 @@
     {% endfor %}
   </tbody>
 </table>
-
+ 
 <script>
 function myFunction() {
-  var input, filter, table, tr, td, i, txtValue;
+  var input, filter, table, tr, i, txtValue;
+  var td0,td1;
+  var txtValue0,txtValue1;
+ 
   input = document.getElementById("searchbar");
   filter = input.value.toUpperCase();
   table = document.getElementById("myTable");
   tr = table.getElementsByTagName("tr");
+ 
   for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[1];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+    
+    td0 = tr[i].getElementsByTagName("td")[0];
+    td1 = tr[i].getElementsByTagName("td")[1];
+ 
+    if (td0||td1) {
+      txtValue0 = td0.textContent || td0.innerText;
+      txtValue1 = td1.textContent || td1.innerText;
+      
+      if (txtValue0.toUpperCase().indexOf(filter) > -1 || txtValue1.toUpperCase().indexOf(filter) > -1) {
         tr[i].style.display = "";
       } else {
         tr[i].style.display = "none";
       }
     }       
   }
-
+ 
 }
 </script>
-
+ 
 </body>
 </html>
-
+ 
