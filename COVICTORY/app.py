@@ -84,7 +84,7 @@ def mailReport():
    date2 = datetime.strptime(date1, "%Y-%m-%d")+timedelta(days=28)
    date2 = date2.date()
    status = get_status(pid)
-
+   print("Mailing")
    messageBody = f"""
    Vaccination Report for {patient[0]} {patient[1]}
    Center Name: {center[1]}
@@ -193,28 +193,28 @@ def vaccinationReport():
     date2 = date2.date()
     status = get_status(pid)
 
-    #if request.method == "POST":
-    #    messageBody = f"""
-    #    Vaccination Report for {patient[0]} {patient[1]}
-    #    Center Name: {center[1]}
-    #    Doctor Name: {doctor[0]}
-    #    City: {center[0]}
-    #    Doctor's email: {doctor[1]}
-    #    Doctor's phone number: {phno}
-#
-    #    Age: {dob}
-    #    Gender: {patient[3]}
-    #    Date of 1st Dose: {date1}
-    #    Date of 2nd Dose: {date2}
-#
-#
-#
-    #    Sent to you by CoVictory Team
-    #    """
-#
-    #    msg.body = messageBody
-    #    mail.send(msg)
+    if request.method == "POST":
+        messageBody = f"""
+        Vaccination Report for {patient[0]} {patient[1]}
+        Center Name: {center[1]}
+        Doctor Name: {doctor[0]}
+        City: {center[0]}
+        Doctor's email: {doctor[1]}
+        Doctor's phone number: {phno}
 
+        Age: {dob}
+        Gender: {patient[3]}
+        Date of 1st Dose: {date1}
+        Date of 2nd Dose: {date2}
+
+
+
+        Sent to you by CoVictory Team
+        """
+
+        msg.body = messageBody
+        mail.send(msg)
+        
     return render_template('vaccination-report.html',status = status, patient = patient,center = center, doctor=doctor, date1 = date1, date2 = date2, dob = dob)
 
 
@@ -277,7 +277,7 @@ def DoctorSlot():
        date = datetime.strptime(slot_date, "%Y-%m-%d")+timedelta(days=28) 
        if not check:
            AssignSlot(vid, slot_date, slot_time, session['did'])
-           AssignSlot(vid, date.date(),slot_time, session['did'])
+           #AssignSlot(vid, date.date(),slot_time, session['did'])
            return render_template('doctor-slot.html')
        else:
             flash('This slot is already assigned to other doctor. Please select a different slot.')

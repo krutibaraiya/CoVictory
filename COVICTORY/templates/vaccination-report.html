@@ -14,14 +14,14 @@
 </head>
 
 <body background = "{{url_for('static', filename = 'images/background-transparent.png')}}">
-<div class='canvas_div_pdf'>
+
 <nav class="navbar navbar-dark bg-dark" style="padding-top: 2px ;padding-bottom:2px; padding-left: 10px;">
   <a class="navbar-brand"><h1>CoVictory</h1></a>
   <ul class="list-group list-group-horizontal">
   <li class="list-group-item list-group-item-action bg-dark text-white"><a class="nav-link text-white" href="/patient-login">Logout</a></li>
   </ul>
 </nav>
-
+<div class='canvas_div_pdf'>
 <h2 class="text-center" style="margin: 40px 25px 0px 25px;">Hello {{patient[0]}} {{patient[1]}} !</h2>
 <br>
 <div class="container bg-light border shadow-lg p-4 mb-4" id="pdf" 
@@ -88,11 +88,13 @@
   </table>
 </div>
 </div>
-<button type="button" class="btn btn-secondary btn-lg btn-block" href="/mail-report/"
-  style="margin: 0rem 0rem 1rem 12rem;" >Mail me Report</button>
+<form action="/vaccination-report/" method = "POST">
+<input type="submit" class="btn btn-secondary btn-lg btn-block"
+  style="margin: 0rem 0rem 1rem 12rem; " value="Mail Report"></input>
 
 <button type="button" class="btn btn-secondary btn-lg btn-block" onclick="getPDF()"
   style="margin: 0rem 0rem 1rem 37rem;" >Download Report</button>
+</form>
 
 <script type="text/javascript">
   function getPDF(){
@@ -124,7 +126,7 @@
 				pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*i)+(top_left_margin*4),canvas_image_width,canvas_image_height);
 			}
 			
-		    pdf.save("HTML-Document.pdf");
+		    pdf.save("CoVaccination Report.pdf");
         });
 	};
 </script>
