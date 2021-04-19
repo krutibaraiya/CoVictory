@@ -118,7 +118,7 @@ def VaccinationCenter():
 @app.route("/patient-update/", methods=["GET, POST"])
 def PatientUpdate():
     did = session['did']
-    patients = get_patient_details(did)
+    patients = get_patient_dropdown(did)
     if request.method == 'POST':
         session['pid'] = request.form["pid"]
         return "Patient Report"
@@ -314,8 +314,7 @@ def PatientList():
         date1 = get_date(pid)
         date2 = datetime.strptime(date1, "%Y-%m-%d")+timedelta(days=28)
         date2 = date2.date()
-        status = get_status(pid)
-        return render_template('patient-data.html',status = status, patient = patient,center = center, doctor=doctor, date1 = date1, date2 = date2, dob = dob)
+        return render_template('patient-data.html', patient = patient,center = center, doctor=doctor, date1 = date1, date2 = date2, dob = dob)
     return render_template('patient-list.html', patients = patients)
 
 @app.route('/patient-data/', methods=["GET", "POST"])
@@ -331,14 +330,13 @@ def patientData():
     date1 = get_date(pid)
     date2 = datetime.strptime(date1, "%Y-%m-%d")+timedelta(days=28)
     date2 = date2.date()
-    status = get_status(pid)
-    if request.method == "POST":
-        status = request.form['status']
-        remarks = request.form['remarks']
-        pid = session['pid']
-        update_report(int(pid), status, remarks)
-        return render_template('patient-data.html',remark = status[1], status = status[0], patient = patient,center = center, doctor=doctor, date1 = date1, date2 = date2, dob = dob)
-    return render_template('patient-data.html',remark = status[1], status = status[0], patient = patient,center = center, doctor=doctor, date1 = date1, date2 = date2, dob = dob)
+    # if request.method == "POST":
+    #     status = request.form['status']
+    #     remarks = request.form['remarks']
+    #     pid = session['pid']
+    #     update_report(int(pid), status, remarks)
+    #     return render_template('patient-data.html',remark = status[1], status = status[0], patient = patient,center = center, doctor=doctor, date1 = date1, date2 = date2, dob = dob)
+    return render_template('patient-data.html', patient = patient,center = center, doctor=doctor, date1 = date1, date2 = date2, dob = dob)
 
 
 

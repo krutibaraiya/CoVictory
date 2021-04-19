@@ -195,7 +195,11 @@ def get_patient_details():
     patients = cursor.fetchall()
     return patients
 
-
+def get_patient_dropdown(did):
+    cursor.execute("SELECT pid FROM VACCINATION WHERE did = %s",(did))
+    patients = cursor.fetchall()
+    return patients
+    
 def get_doctor_details():
     cursor.execute("SELECT did, dname, d_email, d_phone FROM DOCTOR")
     doctors = cursor.fetchall()
@@ -256,10 +260,10 @@ def vaccination_report(pid, did, status):
     connection.commit()
     return 1
 
-def update_report(pid, status, remarks):
-    cursor.execute("update table VACCINATION_REPORT set status = %s, remarks = %s where pid = %s", (status,remarks,pid))
-    connection.commit()
-    return 1
+# def update_report(pid, status, remarks):
+#     cursor.execute("update table VACCINATION_REPORT set status = %s, remarks = %s where pid = %s", (status,remarks,pid))
+#     connection.commit()
+#     return 1
 
 def feedback(feedback):
     cursor.execute("INSERT INTO FEEDBACK(feedback) VALUES (%s)",(feedback))
