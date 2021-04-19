@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script>
 window.onload = function() {
-
+ 
 var chart = new CanvasJS.Chart("chartContainer", {
 	animationEnabled: false,
 	title: {
@@ -22,7 +22,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		]
 	}]
 });
-
+ 
 var chart1 = new CanvasJS.Chart("chartContainer1", {
         animationEnabled: false,
         title: {
@@ -39,24 +39,44 @@ var chart1 = new CanvasJS.Chart("chartContainer1", {
             ]
         }]
     });
-
  
+    var options = {
+	title: {
+		text: "Patient Age Range"              
+	},
+	data: [              
+	{
+		// Change type to "doughnut", "line", "splineArea", etc.
+		type: "column",
+		dataPoints: [
+			{ label: "30-40", y: '{{age30}}'  },
+			{ label: "40-50", y: '{{age40}}'  },
+			{ label: "50-60", y: '{{age50}}'  },
+			{ label: "60-70", y: '{{age60}}'  },
+			{ label: "80-90", y: '{{age70}}'  }
+		]
+	}
+	]
+};
+
+$("#myCanvas").CanvasJSChart(options);
     chart1.render();
     chart.render();
+    chart2.render();
 }
 </script>
 </head>
 <body background="{{url_for('static', filename = 'images/background-transparent.png')}}">
     <nav class="navbar navbar-dark bg-dark" style="padding-top: 2px ;padding-bottom:2px; padding-left: 10px;">
-        <a class="navbar-brand"><h3>CoVictory</h3></a>
+        <a class="navbar-brand"><h1>CoVictory</h1></a>
         <a class="nav-link" href="/"><span class="navbar-text">Home</span></a>
       </nav> 
     
     <br>
-<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+<div id="chartContainer" style="height: 370px; width: 40%; align-items: center; margin-left: auto; margin-right: auto;"></div>
 <br>
-<div id="chartContainer1" style="height: 370px; width: 100%;"></div>
-
+<div id="chartContainer1" style="height: 370px; width: 40%; align-items: center; margin-left: auto; margin-right: auto;"></div>
+ 
 <br>
 <div id="myCanvas" style="height: 370px; width: 100%;"></div>
 <br>

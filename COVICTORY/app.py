@@ -74,7 +74,7 @@ def mailReport():
    msg = Message('CoVictory Vaccination Report', sender = 'developercovictory@gmail.com', recipients = [session['p_email']])
    pid = get_pid(session['p_email'])
    patient = get_patient_report_details(pid)
-   dob = get_dob(patient[4])
+   dob = get_age(patient[4])
    did = get_did_from_pid(pid)
    phno = get_doctor_phno(did)
    doctor = get_doctor_report_details(did)
@@ -182,7 +182,7 @@ def vaccinationReport():
     msg = Message('CoVictory Vaccination Report', sender = 'developercovictory@gmail.com', recipients = [session['p_email']])
     pid = get_pid(session['p_email'])
     patient = get_patient_report_details(pid)
-    dob = get_dob(patient[4])
+    dob = get_age(patient[4])
     did = get_did_from_pid(pid)
     doctor = get_doctor_report_details(did)
     vid = get_vid(session['p_email'])
@@ -214,7 +214,7 @@ def vaccinationReport():
 
         msg.body = messageBody
         mail.send(msg)
-        
+
     return render_template('vaccination-report.html',status = status, patient = patient,center = center, doctor=doctor, date1 = date1, date2 = date2, dob = dob)
 
 
@@ -346,7 +346,31 @@ def statistics():
     covaxin_count = get_patients_of_each_vaccine(vid_covaxin, 0)
     vid_comirnaty = get_vid_for_vaccine('Comirnaty')
     comirnaty_count = get_patients_of_each_vaccine(vid_comirnaty, 0)
-    return render_template('statistics.html', males= males, females=females, covishield= covishield_count, covaxin=covaxin_count, comirnaty=comirnaty_count)
+    age60 = 0
+    age30 = 0
+    age40 = 0
+    age50 = 0
+    age70 = 0
+    age80 = 0
+    dob = get_dob()
+
+    for d in dob:
+        age = get_age(d[0])
+        print(age)
+        if age >= 30 and age < 40:
+            age30 = age30 + 1
+        elif age >=40 and age < 50:
+            age40 = age40 + 1
+        elif age >= 50 and age < 60:
+            age50 = age50 + 1
+        elif age >= 60 and age < 70:
+            age60 = age60 + 1
+        elif age >= 70 and age < 80:
+            age70 = age70 + 1
+        elif age >= 80 and age < 90:
+            age80 = age80 + 1
+        print(age30)
+    return render_template('statistics.html', males= males, females=females, covishield= covishield_count, covaxin=covaxin_count, comirnaty=comirnaty_count, age30 = age30, age40 = age40, age50 = age50, age60 = age60, age70 = age70, age80 = age80)
 
 
 if __name__ == "__main__":

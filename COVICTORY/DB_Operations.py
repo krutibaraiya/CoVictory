@@ -220,10 +220,10 @@ def get_qualification(did, qualifications, k):
     return listoflists
 
 
-# def get_dob():
-#     cursor.execute("SELECT dob FROM PATIENT")
-#     dob = [v for v in cursor.fetchone()][0]
-#     return dob
+def get_dob():
+    cursor.execute("SELECT dob FROM PATIENT")
+    dob = cursor.fetchall()
+    return dob
 
 def get_patient_report_details(pid):
     cursor.execute("SELECT fname, lname, p_email, gender, dob, aadhar_id, p_phone FROM PATIENT WHERE pid = %s",(pid))
@@ -277,7 +277,7 @@ def get_status(pid):
     return status
 
 
-def get_dob(str):
+def get_age(str):
     today = dt.date.today()
     #str = input("Give your date of birth in yyyy-mm-dd: ")
     year = int(str[0:4])
