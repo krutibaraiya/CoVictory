@@ -39,23 +39,7 @@ var chart1 = new CanvasJS.Chart("chartContainer1", {
             ]
         }]
     });
-	var chart2 = new CanvasJS.Chart("chartContainer2", {
-        animationEnabled: false,
-        title: {
-            text: "Vaccination Statistics"
-        },
-        data: [{
-            type: "pie",
-            startAngle: 240,
-            indexLabel: "{label} {y}",
-            dataPoints: [
-                {y: '{{registered}}', label: "Registered"},
-                {y: '{{phase1}}', label: "Dose 1"},
-                {y: '{{vaccianted}}', label:"Dose 2"}
-            ]
-        }]
-    });
- 
+
     var options = {
 	title: {
 		text: "Patient Age Range"              
@@ -95,9 +79,7 @@ $("#myCanvas").CanvasJSChart(options);
 <div id="chartContainer1" style="height: 370px; width: 40%; align-items: center; margin-left: auto; margin-right: auto;"></div>
  
 <br>
-<div id="chartContainer2" style="height: 370px; width: 40%; align-items: center; margin-left: auto; margin-right: auto;"></div>
- 
-<br>
+
 <div id="myCanvas" style="height: 370px; width: 100%;"></div>
 <br>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>

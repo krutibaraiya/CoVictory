@@ -28,7 +28,7 @@ def get_slots(vid):
 
 
 def get_dropdown_slots(vid):
-    cursor.execute("SELECT SLOT.vid, SLOT.s_time, SLOT.s_date, VACCINATION.vid, VACCINATION.s_time, VACCINATION.s_date, VACCINATION.pid FROM SLOT LEFT JOIN VACCINATION ON SLOT.vid = VACCINATION.vid WHERE pid IS NULL AND SLOT.vid = %s",(vid))
+    cursor.execute("SELECT SLOT.vid, SLOT.s_time, SLOT.s_date, VACCINATION.vid, VACCINATION.s_time, VACCINATION.s_date, VACCINATION.pid FROM SLOT LEFT JOIN VACCINATION USING (vid,s_date,s_time) WHERE pid IS NULL AND vid = %s",(vid))
     slots = cursor.fetchall()
     return slots
 

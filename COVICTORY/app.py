@@ -22,7 +22,7 @@ mail= Mail(app)
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USERNAME'] = 'developercovictory@gmail.com'
-app.config['MAIL_PASSWORD'] = 'admin_covictory21'
+app.config['MAIL_PASSWORD'] = 'covictory_admin21'
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
@@ -200,7 +200,7 @@ def vaccinationReport():
     date1 = get_date(pid)
     date2 = datetime.strptime(date1, "%Y-%m-%d")+timedelta(days=28)
     date2 = date2.date()
-    status = get_status(pid)
+
 
     if request.method == "POST":
         messageBody = f"""
@@ -224,7 +224,7 @@ def vaccinationReport():
         msg.body = messageBody
         mail.send(msg)
 
-    return render_template('vaccination-report.html',status = status, patient = patient,center = center, doctor=doctor, date1 = date1, date2 = date2, dob = dob)
+    return render_template('vaccination-report.html', patient = patient,center = center, doctor=doctor, date1 = date1, date2 = date2, dob = dob)
 
 
 @app.route("/doctor-register/", methods=["POST", "GET"])
