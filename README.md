@@ -1,27 +1,20 @@
 # CoVictory
-CoVictory is a portal to manage the covid-19 vaccination drive. Our app eases the process of vaccination slots booking. It reduces the manual paperwork and chances of error are almost negligible. Admin can see the statistics of the drive in a efficient manner and plan the drive accordingly. 
+As the world moves towards Covid Vaccine availability, healthcare organisations and citizens require flexible technology platforms for the entire process of administering and receiving vaccine doses. This project aims to develop a portal to manage the covid-19 vaccination drive.
 
+The project was made as a part of the course - Database Systems.
 
-## Technologies
-Project is created with:
+## Technologies Used
 * Python
 * Flask
 * MySQL
-* HTML/CSS/JS
 
 ## Features and Functionalities:
-* Patient can register for vaccination slot at any vaccination center of their choice. 
-* Patient can choose the time according to their convenience.
-* A doctor is assigned to the patient.
-* Patient gets a vaccination report showing the details of vaccination.
-* Patient can download the pdf of the vacciantion report as well as email themselves.
-* Doctor register themselves at a vaccination center.
-* Doctor can book the slot timings at which they will be present at vaccination center.
-* Doctor can view their patient's list.
-* People can see the statistics for vaccination.
-* Admin can see the all the details of vaccination centers, patients, doctors. 
+* Beneficiaries can register for vaccination slot at any vaccination center of their choice according to their convenience.
+* Registered beneficiaries can download their inoculation reports and can even email themselves.
+* Vaccinators can book/alter their duty timings and can view the list of all beneficiaries under him/her.
+* Statistical data of the inoculation drive can be viewed on the portal's home page by everyone.
+* The super user - Administrator can access all the details of vaccination centers, vaccinators and beneficiaries. 
  
-
 ## Team Members:
 * [Jay Patel](https://github.com/pjay20301)
 * [Kruti Baraiya](https://github.com/krutibaraiya)
