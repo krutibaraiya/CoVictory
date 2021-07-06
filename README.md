@@ -8,7 +8,7 @@ The project was made as a part of the course - Database Systems.
 * Flask
 * MySQL
 
-## Features and Functionalities:
+## Features:
 * Beneficiaries can register for vaccination slot at any vaccination center of their choice according to their convenience.
 * Registered beneficiaries can download their inoculation reports and can even email themselves.
 * Vaccinators can book/alter their duty timings and can view the list of all beneficiaries under him/her.
