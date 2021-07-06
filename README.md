@@ -1,5 +1,5 @@
 # CoVictory
-As the world moves towards Covid Vaccine availability, healthcare organisations and citizens require flexible technology platforms for the entire process of administering and receiving vaccine doses. This project aims to develop a portal to manage the covid-19 vaccination drive.
+As the world moves towards Covid Vaccine availability, healthcare organisations and citizens require flexible technology platforms for the entire process of administering and receiving vaccine doses. This project aims to develop a portal which facilitates users to register, schedule, and track their Covid Dose-1 and Dose-2 vaccinations.
 
 The project was made as a part of the course - Database Systems.
 
